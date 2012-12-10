@@ -4,4 +4,4 @@ jdk:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-script: mvn clean build test
+script: mvn clean test
