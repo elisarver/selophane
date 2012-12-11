@@ -1,11 +1,39 @@
 package org.selophane.elements.impl;
 
+import org.openqa.selenium.WebElement;
+import org.selophane.elements.TextInput;
+
 /**
- * Created with IntelliJ IDEA.
- * User: lowmagnet
- * Date: 12/10/12
- * Time: 9:13 PM
- * To change this template use File | Settings | File Templates.
+ * TextInput  wrapper.
  */
-public class TextInputImpl {
+public class TextInputImpl extends ElementImpl implements TextInput {
+    /**
+     * Creates a Element for a given WebElement.
+     *
+     * @param element element to wrap up
+     */
+    public TextInputImpl(WebElement element) {
+        super(element);
+    }
+
+    @Override
+    public void clear() {
+        getWrappedElement().clear();
+    }
+
+    @Override
+    public void set(String text) {
+        WebElement element = getWrappedElement();
+        element.clear();
+        element.sendKeys(text);
+    }
+
+    /**
+     * Gets the value of an input field.
+     * @return String with the value of the field.
+     */
+    @Override
+    public String getText() {
+        return getWrappedElement().getAttribute("value");
+    }
 }

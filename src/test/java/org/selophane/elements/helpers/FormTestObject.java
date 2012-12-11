@@ -1,9 +1,6 @@
 package org.selophane.elements.helpers;
 
-import org.selophane.elements.CheckBox;
-import org.selophane.elements.Element;
-import org.selophane.elements.Label;
-import org.selophane.elements.Select;
+import org.selophane.elements.*;
 import org.selophane.elements.impl.internal.ElementFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +14,8 @@ import java.util.List;
 public class FormTestObject {
 
     private WebDriver driver;
+
+    public TextInput texta;
 
     @FindBy(id = "test1")
     public Element element;

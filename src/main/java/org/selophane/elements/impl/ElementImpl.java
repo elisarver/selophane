@@ -1,12 +1,14 @@
 package org.selophane.elements.impl;
 
-import org.selophane.elements.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
+import org.selophane.elements.Element;
+import org.selophane.elements.TextInput;
+import sun.jvm.hotspot.types.WrongTypeException;
 
 import java.util.List;
 
@@ -99,7 +101,7 @@ public class ElementImpl implements Element {
 
     @Override
     public void clear() {
-        element.clear();
+        throw new WrongTypeException("Method clear is only available in the " + TextInput.class.getName() + "class.");
     }
 
     @Override
