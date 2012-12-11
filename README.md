@@ -1,4 +1,4 @@
 selophane
 =========
 
-Repository for the selophane project (see selophane.org for details)
+Repository for the selophane project (see elisarver.com (temporary home) for details)
