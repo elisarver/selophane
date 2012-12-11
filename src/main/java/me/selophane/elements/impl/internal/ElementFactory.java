@@ -7,6 +7,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * Element factory for wrapped elements.
  */
 public class ElementFactory extends PageFactory {
     /**

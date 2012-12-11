@@ -27,7 +27,7 @@ public class Part2ExampleTest {
      * It's used by the static factory to generate an instance of the test,
      * which is silly on its face, but it's perfectly valid (and sorta neat)
      *
-     * @param driver
+     * @param driver A web driver.
      */
     protected Part2ExampleTest(WebDriver driver) {
         this.driver = driver;
