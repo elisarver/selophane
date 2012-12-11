@@ -93,7 +93,7 @@ public class FormTest {
         testObject.get();
         Assert.assertTrue(testObject.webElement.isDisplayed());
     }
-    
+
     @AfterClass
     public static void afterClass() {
         driver.close();

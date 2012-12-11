@@ -8,7 +8,6 @@ import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.selophane.elements.Element;
 import org.selophane.elements.TextInput;
-import sun.jvm.hotspot.types.WrongTypeException;
 
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class ElementImpl implements Element {
 
     @Override
     public void clear() {
-        throw new WrongTypeException("Method clear is only available in the " + TextInput.class.getName() + "class.");
+        throw new NoSuchMethodError("Method clear is only available in the " + TextInput.class.getName() + "class.");
     }
 
     @Override
