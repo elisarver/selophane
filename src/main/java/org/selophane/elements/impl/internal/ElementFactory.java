@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Element factory for wrapped elements.
  */
+// TODO: expand functionality to all constructors, remove 'extends'
 public class ElementFactory extends PageFactory {
     /**
      * Initializes a page factory from a class with a template of
@@ -22,7 +23,9 @@ public class ElementFactory extends PageFactory {
     public static <T> T initElements(WebDriver driver, Class<T> pageClassToProxy) {
         try {
             T page = pageClassToProxy.getConstructor(WebDriver.class).newInstance(driver);
-            PageFactory.initElements(new ElementDecorator(new DefaultElementLocatorFactory(driver)), page);
+            PageFactory.initElements(
+                    new ElementDecorator(
+                            new DefaultElementLocatorFactory(driver)), page);
             return page;
         } catch (InstantiationException e) {
             throw new RuntimeException(e);

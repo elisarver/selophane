@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.selophane.elements.helpers.FormTestObject;
 
 /**
@@ -20,7 +20,7 @@ public class FormTest {
 
     @BeforeClass
     public static void beforeClass() {
-        driver = new FirefoxDriver();
+        driver = new HtmlUnitDriver();
         testObject = FormTestObject.initialize(driver);
     }
 
