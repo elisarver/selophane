@@ -1,4 +1,4 @@
-package me.selophane.elements.impl.internal;
+package org.selophane.elements.impl.internal;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

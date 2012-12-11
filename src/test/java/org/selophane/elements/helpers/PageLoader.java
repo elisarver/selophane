@@ -1,4 +1,4 @@
-package me.selophane.elements.helpers;
+package org.selophane.elements.helpers;
 
 import org.openqa.selenium.WebDriver;
 

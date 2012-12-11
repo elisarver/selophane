@@ -1,6 +1,6 @@
-package me.selophane.elements.impl;
+package org.selophane.elements.impl;
 
-import me.selophane.elements.Element;
+import org.selophane.elements.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;

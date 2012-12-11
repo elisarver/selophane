@@ -1,6 +1,6 @@
-package me.selophane.elements.impl;
+package org.selophane.elements.impl;
 
-import me.selophane.elements.CheckBox;
+import org.selophane.elements.CheckBox;
 import org.openqa.selenium.WebElement;
 
 /**

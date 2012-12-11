@@ -1,6 +1,6 @@
-package me.selophane.elements.impl.internal;
+package org.selophane.elements.impl.internal;
 
-import me.selophane.elements.Element;
+import org.selophane.elements.Element;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;

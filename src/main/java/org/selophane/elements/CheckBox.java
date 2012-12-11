@@ -1,7 +1,7 @@
-package me.selophane.elements;
+package org.selophane.elements;
 
-import me.selophane.elements.impl.CheckBoxImpl;
-import me.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elements.impl.CheckBoxImpl;
+import org.selophane.elements.impl.internal.ImplementedBy;
 
 /**
  * Interface that wraps a WebElement in CheckBox functionality.

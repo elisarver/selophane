@@ -1,10 +1,10 @@
-package me.selophane.elements.helpers;
+package org.selophane.elements.helpers;
 
-import me.selophane.elements.CheckBox;
-import me.selophane.elements.Element;
-import me.selophane.elements.Label;
-import me.selophane.elements.Select;
-import me.selophane.elements.impl.internal.ElementFactory;
+import org.selophane.elements.CheckBox;
+import org.selophane.elements.Element;
+import org.selophane.elements.Label;
+import org.selophane.elements.Select;
+import org.selophane.elements.impl.internal.ElementFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

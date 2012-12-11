@@ -1,6 +1,6 @@
-package me.selophane.elements.impl;
+package org.selophane.elements.impl;
 
-import me.selophane.elements.Label;
+import org.selophane.elements.Label;
 import org.openqa.selenium.WebElement;
 
 /**

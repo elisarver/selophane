@@ -1,9 +1,9 @@
 package example;
 
 import junit.framework.Assert;
-import me.selophane.elements.CheckBox;
-import me.selophane.elements.helpers.PageLoader;
-import me.selophane.elements.impl.CheckBoxImpl;
+import org.selophane.elements.CheckBox;
+import org.selophane.elements.helpers.PageLoader;
+import org.selophane.elements.impl.CheckBoxImpl;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

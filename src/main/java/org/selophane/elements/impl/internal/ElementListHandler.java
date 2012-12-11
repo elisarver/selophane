@@ -1,6 +1,6 @@
-package me.selophane.elements.impl.internal;
+package org.selophane.elements.impl.internal;
 
-import me.selophane.elements.Element;
+import org.selophane.elements.Element;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 
@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.selophane.elements.impl.internal.ImplementedByProcessor.getWrapperClass;
+import static org.selophane.elements.impl.internal.ImplementedByProcessor.getWrapperClass;
 
 /**
  * Wraps a list of WebElements in multiple wrapped elements.

@@ -1,7 +1,7 @@
-package me.selophane.elements;
+package org.selophane.elements;
 
 import junit.framework.Assert;
-import me.selophane.elements.helpers.FormTestObject;
+import org.selophane.elements.helpers.FormTestObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;

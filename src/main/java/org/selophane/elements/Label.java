@@ -1,7 +1,7 @@
-package me.selophane.elements;
+package org.selophane.elements;
 
-import me.selophane.elements.impl.LabelImpl;
-import me.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elements.impl.LabelImpl;
+import org.selophane.elements.impl.internal.ImplementedBy;
 
 /**
  * Html form label.
