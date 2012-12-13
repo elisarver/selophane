@@ -7,8 +7,34 @@
   <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>selophane</name>
-  <url>http://selophane.me</url>
+  <name>Selophane</name>
+  <description>Selophane provides a way of wrapping Selenium WebDriver's WebElement class in an interface called Element
+    that provides extended functionality such as dropdown lists, checkboxes, url tools, etc. It is not necessary to use
+    Selophane to test with WebDriver, but it helps.
+  </description>
+  <licenses>
+    <license>
+      <name>Apache 2.0 License</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+    </license>
+  </licenses>
+  <ciManagement>
+    <url>https://travis-ci.org/elisarver/selophane</url>
+  </ciManagement>
+  <scm>
+    <url>https://github.com/elisarver/selophane</url>
+  </scm>
+  <url>http://selophane.org</url>
+  <developers>
+    <developer>
+      <roles>
+        <role>member</role>
+      </roles>
+      <name>Eli Sarver</name>
+      <email>eli@elisarver.com</email>
+      <url>http://elisarver.com/</url>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
