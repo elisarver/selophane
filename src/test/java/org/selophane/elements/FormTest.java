@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.selophane.elements.helpers.FormTestObject;
 
@@ -58,6 +59,28 @@ public class FormTest {
         for (Label label : testObject.labels) {
             Assert.assertNotNull(label.getFor());
         }
+    }
+
+    @Test
+    public void getElementLabelsList() {
+        testObject.get();
+        for (Element webElementLabel : testObject.elementLabels) {
+            Assert.assertNotNull(webElementLabel.getAttribute("for"));
+        }
+    }
+
+    @Test
+    public void getWebElementLabelsList() {
+        testObject.get();
+        for (WebElement webElementLabel : testObject.webElementLabels) {
+            Assert.assertNotNull(webElementLabel.getAttribute("for"));
+        }
+    }
+
+    @Test
+    public void getWebElement() {
+        testObject.get();
+        Assert.assertTrue(testObject.labelForTextB.isDisplayed());
     }
 
     @Test

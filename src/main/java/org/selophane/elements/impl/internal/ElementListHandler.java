@@ -1,8 +1,8 @@
 package org.selophane.elements.impl.internal;
 
-import org.selophane.elements.Element;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
+import org.selophane.elements.Element;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -34,6 +34,7 @@ public class ElementListHandler implements InvocationHandler {
             throw new RuntimeException("interface not assignable to Element.");
         }
         this.wrappingType = getWrapperClass(interfaceType);
+
     }
 
     /**
@@ -60,4 +61,6 @@ public class ElementListHandler implements InvocationHandler {
             throw e.getCause();
         }
     }
+
+
 }

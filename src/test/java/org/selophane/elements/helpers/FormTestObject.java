@@ -32,6 +32,15 @@ public class FormTestObject {
     @FindBy(tagName = "label")
     public List<Label> labels;
 
+    @FindBy(tagName = "label")
+    public List<Element> elementLabels;
+
+    @FindBy(tagName = "label")
+    public List<WebElement> webElementLabels;
+
+    @FindBy(css = "label[for='textb']")
+    public WebElement labelForTextB;
+
     public FormTestObject(WebDriver driver) {
         this.driver = driver;
     }

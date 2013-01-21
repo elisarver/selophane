@@ -1,6 +1,5 @@
 package org.selophane.elements.impl.internal;
 
-import org.selophane.elements.Element;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
@@ -9,6 +8,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandler;
+import org.selophane.elements.Element;
 
 import java.lang.reflect.*;
 import java.util.List;
@@ -69,7 +70,7 @@ public class ElementDecorator implements FieldDecorator {
         return (Class) ((ParameterizedType) genericType).getActualTypeArguments()[0];
     }
 
-    private boolean isDecoratableList(Field field) { // TODO: broken
+    private boolean isDecoratableList(Field field) {
         if (!List.class.isAssignableFrom(field.getType())) {
             return false;
         }
@@ -119,9 +120,13 @@ public class ElementDecorator implements FieldDecorator {
      * @return proxy with the same type as we started with.
      */
     @SuppressWarnings("unchecked")
-    protected <T> List<T> proxyForListLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) { // TODO: broken
-        InvocationHandler handler = new ElementListHandler(interfaceType, locator);
-
+    protected <T> List<T> proxyForListLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) {
+        InvocationHandler handler;
+        if (interfaceType.getName().startsWith("org.selophane")) {
+            handler = new ElementListHandler(interfaceType, locator);
+        } else {
+            handler = new LocatingElementListHandler(locator);
+        }
         List<T> proxy;
         proxy = (List<T>) Proxy.newProxyInstance(
                 loader, new Class[]{List.class}, handler);
