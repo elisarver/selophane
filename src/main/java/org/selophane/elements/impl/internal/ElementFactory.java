@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Element factory for wrapped elements.
  */
-// TODO: expand functionality to all constructors, remove 'extends'
 public class ElementFactory extends PageFactory {
     /**
      * Initializes a page factory from a class with a template of
