@@ -29,8 +29,8 @@
         <module name="selophane" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="selophane" target="1.6" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="selophane" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
