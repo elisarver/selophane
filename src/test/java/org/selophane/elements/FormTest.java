@@ -1,7 +1,7 @@
 package org.selophane.elements;
 
-import junit.framework.Assert;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,6 +115,24 @@ public class FormTest {
     public void formWebElement() {
         testObject.get();
         Assert.assertTrue(testObject.webElement.isDisplayed());
+    }
+
+    @Test
+    public void tableRowCount() {
+	testObject.get();
+	Assert.assertEquals(4, testObject.table.getRowCount());
+    }
+
+    @Test
+    public void tableColumnCount() {
+	testObject.get();
+	Assert.assertEquals(2, testObject.table.getColumnCount());
+    }
+
+    @Test
+    public void tableGetCell() {
+	testObject.get();
+	Assert.assertEquals("January", testObject.table.getCellAtIndex(2, 0).getText());
     }
 
     @AfterClass
