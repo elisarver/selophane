@@ -11,7 +11,7 @@ import org.selophane.elements.Table;
  */
 public class TableImpl extends ElementImpl implements Table {
 	/**
-	 * Creates a Element for a given WebElement.
+	 * Creates a Table for a given WebElement.
 	 *
 	 * @param element
 	 *            element to wrap up
@@ -37,14 +37,27 @@ public class TableImpl extends ElementImpl implements Table {
 		return getColumnsForRow(row).get(colIdx);
 	}
 
+	/**
+	 * Gets the rows within the tbody tag
+	 * @return List of body row WebElements
+	 */
 	private List<WebElement> getBodyRows() {
 		return findElements(By.cssSelector("tbody tr"));
 	}
 
+	/**
+	 * Gets all rows in the table
+	 * @return list of row WebElements
+	 */
 	private List<WebElement> getRows() {
 		return findElements(By.cssSelector("tr"));
 	}
 
+	/**
+	 * Gets the columns in the specified row
+	 * @param row WebElement of the row
+	 * @return List of column WebElements
+	 */
 	private List<WebElement> getColumnsForRow(WebElement row) {
 		return row.findElements(By.tagName("td"));
 	}
