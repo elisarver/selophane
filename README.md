@@ -28,4 +28,4 @@ github.com/elisarver
 ```
 
 Contributors:
-  Joe Vanderwee (github.com/jvanderwee) - table objects!
+  Joe van der Wee (github.com/jvanderwee) - table objects!
