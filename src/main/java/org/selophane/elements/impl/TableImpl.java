@@ -27,22 +27,28 @@ public class TableImpl extends ElementImpl implements Table {
 
 	@Override
 	public int getColumnCount() {
-		WebElement bodyRow = getBodyRows().get(0);
-		return getColumnsForRow(bodyRow).size();
+		return findElement(By.cssSelector("tr")).findElements(By.cssSelector("*")).size();
+		
+		//Would ideally do:
+		//return findElements(By.cssSelector("tr:first-of-type > *"));
+		//however HTMLUnitDriver does not support CSS3
 	}
 
 	@Override
 	public WebElement getCellAtIndex(int rowIdx, int colIdx) {
 		WebElement row = getRows().get(rowIdx);
-		return getColumnsForRow(row).get(colIdx);
-	}
-	
-	/**
-	 * Gets the rows within the tbody tag
-	 * @return List of body row WebElements
-	 */
-	private List<WebElement> getBodyRows() {
-		return findElements(By.cssSelector("tbody tr"));
+		
+		List<WebElement> tds;
+		List<WebElement> ths;
+		
+		if((tds = row.findElements(By.tagName("td"))).size() > 0) {
+			return tds.get(colIdx);
+		} else if ((ths = row.findElements(By.tagName("th"))).size() > 0) {
+			return ths.get(colIdx);
+		} else {
+			final String error = String.format("Could not find cell at row: %s column: %s", rowIdx, colIdx);
+			throw new RuntimeException(error);
+		}
 	}
 
 	/**
@@ -50,17 +56,6 @@ public class TableImpl extends ElementImpl implements Table {
 	 * @return list of row WebElements
 	 */
 	private List<WebElement> getRows() {
-		return findElements(By.cssSelector("tr"));
+		return findElements(By.tagName("tr"));
 	}
-
-	/**
-	 * Gets the columns in the specified row
-	 * @param row WebElement of the row
-	 * @return List of column WebElements
-	 */
-	private List<WebElement> getColumnsForRow(WebElement row) {
-		return row.findElements(By.tagName("td"));
-	}
-
-	
 }
