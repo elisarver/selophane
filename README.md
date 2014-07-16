@@ -26,3 +26,6 @@ Eli Sarver
 github.com/elisarver
            elisarver.com  (blog, some other pages)
 ```
+
+Contributors:
+  Joe Vanderwee (github.com/jvanderwee) - table objects!
