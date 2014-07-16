@@ -109,11 +109,6 @@ public class ElementImpl implements Element {
     }
 
     @Override
-    public Point getLocationOnScreenOnceScrolledIntoView() {
-        return ((Locatable) element).getLocationOnScreenOnceScrolledIntoView();
-    }
-
-    @Override
     public Coordinates getCoordinates() {
         return ((Locatable) element).getCoordinates();
     }
