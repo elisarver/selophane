@@ -42,7 +42,7 @@ public class ElementHandler implements InvocationHandler {
         if ("getWrappedElement".equals(method.getName())) {
             return element;
         }
-        Constructor cons = wrappingType.getConstructor(WebElement.class);
+        Constructor<?> cons = wrappingType.getConstructor(WebElement.class);
         Object thing = cons.newInstance(element);
         try {
             return method.invoke(wrappingType.cast(thing), objects);

@@ -49,7 +49,7 @@ public class ElementListHandler implements InvocationHandler {
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
         List<Object> wrappedList = new ArrayList<Object>();
-        Constructor cons = wrappingType.getConstructor(WebElement.class);
+        Constructor<?> cons = wrappingType.getConstructor(WebElement.class);
         for (WebElement element : locator.findElements()) {
             Object thing = cons.newInstance(element);
             wrappedList.add(wrappingType.cast(thing));

@@ -16,5 +16,5 @@ public @interface ImplementedBy {
     /**
      * Class implementing the interface. (by default)
      */
-    Class value() default ElementImpl.class;
+    Class<?> value() default ElementImpl.class;
 }

@@ -16,10 +16,10 @@ public final class ImplementedByProcessor {
      * @param <T>   type of the wrapped class.
      * @return The class name of the class in question
      */
-    public static <T> Class getWrapperClass(Class<T> iface) {
+    public static <T> Class<?> getWrapperClass(Class<T> iface) {
         if (iface.isAnnotationPresent(ImplementedBy.class)) {
             ImplementedBy annotation = iface.getAnnotation(ImplementedBy.class);
-            Class clazz = annotation.value();
+            Class<?> clazz = annotation.value();
             if (Element.class.isAssignableFrom(clazz)) {
                 return annotation.value();
             }
