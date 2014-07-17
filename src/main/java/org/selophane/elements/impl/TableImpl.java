@@ -12,11 +12,7 @@ import org.selophane.elements.Table;
  */
 public class TableImpl extends ElementImpl implements Table {
 	/**
-	 * Creates a Table for a given WebElement. <<<<<<< HEAD
-	 * 
-	 * =======
-	 * 
-	 * >>>>>>> ee7b5147aebd6355418268cd81b675566b81bdb9
+	 * Creates a Table for a given WebElement.
 	 * 
 	 * @param element
 	 *            element to wrap up
@@ -42,15 +38,18 @@ public class TableImpl extends ElementImpl implements Table {
 
 	@Override
 	public WebElement getCellAtIndex(int rowIdx, int colIdx) {
+		// Get the row at the specified index
 		WebElement row = getRows().get(rowIdx);
 
-		List<WebElement> tds;
-		List<WebElement> ths;
+		List<WebElement> cells;
 
-		if ((tds = row.findElements(By.tagName("td"))).size() > 0) {
-			return tds.get(colIdx);
-		} else if ((ths = row.findElements(By.tagName("th"))).size() > 0) {
-			return ths.get(colIdx);
+		// Cells are most likely to be td tags
+		if ((cells = row.findElements(By.tagName("td"))).size() > 0) {
+			return cells.get(colIdx);
+		}
+		// Failing that try th tags
+		else if ((cells = row.findElements(By.tagName("th"))).size() > 0) {
+			return cells.get(colIdx);
 		} else {
 			final String error = String
 					.format("Could not find cell at row: %s column: %s",
@@ -65,16 +64,18 @@ public class TableImpl extends ElementImpl implements Table {
 	 * @return list of row WebElements
 	 */
 	private List<WebElement> getRows() {
-		List<WebElement> headerRows = findElements(By.cssSelector("thead tr"));
-		List<WebElement> bodyRows = findElements(By.cssSelector("tbody tr"));
-		List<WebElement> footerRows = findElements(By.cssSelector("tfoot tr"));
+		List<WebElement> rows = new ArrayList<WebElement>();
+		
+		//Header rows
+		rows.addAll(findElements(By.cssSelector("thead tr")));
+		
+		//Body rows
+		rows.addAll(findElements(By.cssSelector("tbody tr")));
+		
+		//Footer rows
+		rows.addAll(findElements(By.cssSelector("tfoot tr")));
 
-		List<WebElement> allRows = new ArrayList<WebElement>();
-		allRows.addAll(headerRows);
-		allRows.addAll(bodyRows);
-		allRows.addAll(footerRows);
-
-		return allRows;
+		return rows;
 	}
 
 }
