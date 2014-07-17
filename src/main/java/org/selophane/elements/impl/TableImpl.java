@@ -1,5 +1,6 @@
 package org.selophane.elements.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -52,10 +53,19 @@ public class TableImpl extends ElementImpl implements Table {
 	}
 
 	/**
-	 * Gets all rows in the table
+	 * Gets all rows in the table in order header > body > footer
 	 * @return list of row WebElements
 	 */
 	private List<WebElement> getRows() {
-		return findElements(By.tagName("tr"));
+		List<WebElement> headerRows = findElements(By.cssSelector("thead tr"));
+		List<WebElement> bodyRows = findElements(By.cssSelector("tbody tr"));
+		List<WebElement> footerRows = findElements(By.cssSelector("tfoot tr"));
+		
+		List<WebElement> allRows = new ArrayList<WebElement>();
+		allRows.addAll(headerRows);
+		allRows.addAll(bodyRows);
+		allRows.addAll(footerRows);
+		
+		return allRows;
 	}
 }
