@@ -28,7 +28,7 @@ public class FormTestObject {
 
     @FindBy(id = "checkbox")
     public CheckBox checkbox;
-
+    
     @FindBy(id = "table")
     public Table table;
 

@@ -28,6 +28,5 @@ public interface Table extends Element {
      * @param colIdx The zero based index of the column
      * @return the WebElement of the cell at the specified index
      */
-    WebElement getCellAtIndex(int rowIdx, int colIdx);
-
+    WebElement getCellAtIndex(int rowIdx, int colIdx); 
 }

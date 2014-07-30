@@ -1,5 +1,6 @@
 package org.selophane.elements.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -12,7 +13,7 @@ import org.selophane.elements.Table;
 public class TableImpl extends ElementImpl implements Table {
 	/**
 	 * Creates a Table for a given WebElement.
-	 *
+	 * 
 	 * @param element
 	 *            element to wrap up
 	 */
@@ -27,40 +28,54 @@ public class TableImpl extends ElementImpl implements Table {
 
 	@Override
 	public int getColumnCount() {
-		WebElement bodyRow = getBodyRows().get(0);
-		return getColumnsForRow(bodyRow).size();
+
+		return findElement(By.cssSelector("tr")).findElements(
+				By.cssSelector("*")).size();
+		// Would ideally do:
+		// return findElements(By.cssSelector("tr:first-of-type > *"));
+		// however HTMLUnitDriver does not support CSS3
 	}
 
 	@Override
 	public WebElement getCellAtIndex(int rowIdx, int colIdx) {
+		// Get the row at the specified index
 		WebElement row = getRows().get(rowIdx);
-		return getColumnsForRow(row).get(colIdx);
+
+		List<WebElement> cells;
+
+		// Cells are most likely to be td tags
+		if ((cells = row.findElements(By.tagName("td"))).size() > 0) {
+			return cells.get(colIdx);
+		}
+		// Failing that try th tags
+		else if ((cells = row.findElements(By.tagName("th"))).size() > 0) {
+			return cells.get(colIdx);
+		} else {
+			final String error = String
+					.format("Could not find cell at row: %s column: %s",
+							rowIdx, colIdx);
+			throw new RuntimeException(error);
+		}
 	}
 
 	/**
-	 * Gets the rows within the tbody tag
-	 * @return List of body row WebElements
-	 */
-	private List<WebElement> getBodyRows() {
-		return findElements(By.cssSelector("tbody tr"));
-	}
-
-	/**
-	 * Gets all rows in the table
+	 * Gets all rows in the table in order header > body > footer
+	 * 
 	 * @return list of row WebElements
 	 */
 	private List<WebElement> getRows() {
-		return findElements(By.cssSelector("tr"));
-	}
+		List<WebElement> rows = new ArrayList<WebElement>();
+		
+		//Header rows
+		rows.addAll(findElements(By.cssSelector("thead tr")));
+		
+		//Body rows
+		rows.addAll(findElements(By.cssSelector("tbody tr")));
+		
+		//Footer rows
+		rows.addAll(findElements(By.cssSelector("tfoot tr")));
 
-	/**
-	 * Gets the columns in the specified row
-	 * @param row WebElement of the row
-	 * @return List of column WebElements
-	 */
-	private List<WebElement> getColumnsForRow(WebElement row) {
-		return row.findElements(By.tagName("td"));
+		return rows;
 	}
-
 
 }
