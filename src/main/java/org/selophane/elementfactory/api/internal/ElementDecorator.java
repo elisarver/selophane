@@ -1,4 +1,4 @@
-package org.selophane.elements.impl.internal;
+package org.selophane.elementfactory.api.internal;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandler;
-import org.selophane.elements.Element;
+import org.selophane.elements.api.Element;
 
 import java.lang.reflect.*;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.selophane.elements.impl;
+package org.selophane.elements.api.impl;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -6,8 +6,8 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
-import org.selophane.elements.Element;
-import org.selophane.elements.TextInput;
+import org.selophane.elements.api.Element;
+import org.selophane.elements.api.TextInput;
 
 import java.util.List;
 

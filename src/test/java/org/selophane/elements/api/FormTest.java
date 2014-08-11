@@ -1,4 +1,4 @@
-package org.selophane.elements;
+package org.selophane.elements.api;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -10,6 +10,8 @@ import org.junit.runners.JUnit4;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.selophane.elements.api.Element;
+import org.selophane.elements.api.Label;
 import org.selophane.elements.helpers.FormTestObject;
 
 /**

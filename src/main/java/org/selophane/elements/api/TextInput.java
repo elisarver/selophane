@@ -1,7 +1,7 @@
-package org.selophane.elements;
+package org.selophane.elements.api;
 
-import org.selophane.elements.impl.TextInputImpl;
-import org.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elementfactory.api.ImplementedBy;
+import org.selophane.elements.api.impl.TextInputImpl;
 
 /**
  * Text field functionality.

@@ -1,16 +1,25 @@
-package org.selophane.elements;
+package org.selophane.elements.api.impl;
 
-import org.selophane.elements.impl.SelectImpl;
-import org.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elements.api.Select;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
 /**
- * Interface for a select element.
+ * Wrapper around a WebElement for the Select class in Selenium.
  */
-@ImplementedBy(SelectImpl.class)
-public interface Select extends Element {
+public class SelectImpl extends ElementImpl implements Select {
+    private final org.openqa.selenium.support.ui.Select innerSelect;
+
+    /**
+     * Wraps a WebElement with checkbox functionality.
+     *
+     * @param element to wrap up
+     */
+    public SelectImpl(WebElement element) {
+        super(element);
+        this.innerSelect = new org.openqa.selenium.support.ui.Select(element);
+    }
 
     /**
      * Wraps Selenium's method.
@@ -18,7 +27,9 @@ public interface Select extends Element {
      * @return boolean if this is a multiselect.
      * @see org.openqa.selenium.support.ui.Select#isMultiple()
      */
-    boolean isMultiple();
+    public boolean isMultiple() {
+        return innerSelect.isMultiple();
+    }
 
     /**
      * Wraps Selenium's method.
@@ -26,7 +37,9 @@ public interface Select extends Element {
      * @param index index to select
      * @see org.openqa.selenium.support.ui.Select#deselectByIndex(int)
      */
-    void deselectByIndex(int index);
+    public void deselectByIndex(int index) {
+        innerSelect.deselectByIndex(index);
+    }
 
     /**
      * Wraps Selenium's method.
@@ -34,7 +47,9 @@ public interface Select extends Element {
      * @param value the value to select.
      * @see org.openqa.selenium.support.ui.Select#selectByValue(String)
      */
-    void selectByValue(String value);
+    public void selectByValue(String value) {
+        innerSelect.selectByValue(value);
+    }
 
     /**
      * Wraps Selenium's method.
@@ -42,7 +57,9 @@ public interface Select extends Element {
      * @return WebElement of the first selected option.
      * @see org.openqa.selenium.support.ui.Select#getFirstSelectedOption()
      */
-    WebElement getFirstSelectedOption();
+    public WebElement getFirstSelectedOption() {
+        return innerSelect.getFirstSelectedOption();
+    }
 
     /**
      * Wraps Selenium's method.
@@ -50,7 +67,9 @@ public interface Select extends Element {
      * @param text visible text to select
      * @see org.openqa.selenium.support.ui.Select#selectByVisibleText(String)
      */
-    void selectByVisibleText(String text);
+    public void selectByVisibleText(String text) {
+        innerSelect.selectByVisibleText(text);
+    }
 
     /**
      * Wraps Selenium's method.
@@ -58,14 +77,18 @@ public interface Select extends Element {
      * @param value value to deselect
      * @see org.openqa.selenium.support.ui.Select#deselectByValue(String)
      */
-    void deselectByValue(String value);
+    public void deselectByValue(String value) {
+        innerSelect.deselectByValue(value);
+    }
 
     /**
      * Wraps Selenium's method.
      *
      * @see org.openqa.selenium.support.ui.Select#deselectAll()
      */
-    void deselectAll();
+    public void deselectAll() {
+        innerSelect.deselectAll();
+    }
 
     /**
      * Wraps Selenium's method.
@@ -73,7 +96,9 @@ public interface Select extends Element {
      * @return List of WebElements selected in the select
      * @see org.openqa.selenium.support.ui.Select#getAllSelectedOptions()
      */
-    List<WebElement> getAllSelectedOptions();
+    public List<WebElement> getAllSelectedOptions() {
+        return innerSelect.getAllSelectedOptions();
+    }
 
     /**
      * Wraps Selenium's method.
@@ -81,7 +106,9 @@ public interface Select extends Element {
      * @return list of all options in the select.
      * @see org.openqa.selenium.support.ui.Select#getOptions()
      */
-    List<WebElement> getOptions();
+    public List<WebElement> getOptions() {
+        return innerSelect.getOptions();
+    }
 
     /**
      * Wraps Selenium's method.
@@ -89,7 +116,9 @@ public interface Select extends Element {
      * @param text text to deselect by visible text
      * @see org.openqa.selenium.support.ui.Select#deselectByVisibleText(String)
      */
-    void deselectByVisibleText(String text);
+    public void deselectByVisibleText(String text) {
+        innerSelect.deselectByVisibleText(text);
+    }
 
     /**
      * Wraps Selenium's method.
@@ -97,6 +126,7 @@ public interface Select extends Element {
      * @param index index to select
      * @see org.openqa.selenium.support.ui.Select#selectByIndex(int)
      */
-    void selectByIndex(int index);
-
+    public void selectByIndex(int index) {
+        innerSelect.selectByIndex(index);
+    }
 }

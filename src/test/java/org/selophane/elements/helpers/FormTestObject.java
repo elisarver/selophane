@@ -1,7 +1,7 @@
 package org.selophane.elements.helpers;
 
-import org.selophane.elements.*;
-import org.selophane.elements.impl.internal.ElementFactory;
+import org.selophane.elementfactory.api.ElementFactory;
+import org.selophane.elements.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

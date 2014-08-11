@@ -1,8 +1,8 @@
-package org.selophane.elements;
+package org.selophane.elements.api;
 
 import org.openqa.selenium.WebElement;
-import org.selophane.elements.impl.TableImpl;
-import org.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elementfactory.api.ImplementedBy;
+import org.selophane.elements.api.impl.TableImpl;
 
 /**
  * Table functionality.
