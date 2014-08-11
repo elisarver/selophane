@@ -53,8 +53,8 @@ public class FormTest {
 
     @Test
     public void selectWiredProperly() {
-        testObject.option1.selectByIndex(0);
-        Assert.assertEquals(1, testObject.option1.getAllSelectedOptions().size());
+        testObject.selectFragment.getOption1().selectByIndex(0);
+        Assert.assertEquals(1, testObject.selectFragment.getOption1().getAllSelectedOptions().size());
     }
 
     @Test
