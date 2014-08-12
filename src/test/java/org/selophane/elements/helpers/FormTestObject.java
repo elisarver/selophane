@@ -1,7 +1,7 @@
 package org.selophane.elements.helpers;
 
-import org.selophane.elements.*;
-import org.selophane.elements.impl.internal.ElementFactory;
+import org.selophane.elementfactory.api.ElementFactory;
+import org.selophane.elements.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,8 +23,8 @@ public class FormTestObject {
     @FindBy(id = "test1")
     public WebElement webElement;
 
-    @FindBy(id = "option1")
-    public Select option1;
+    @FindBy(id = SelectFragment.ID_LOCATOR)
+    public SelectFragment selectFragment;
 
     @FindBy(id = "checkbox")
     public CheckBox checkbox;

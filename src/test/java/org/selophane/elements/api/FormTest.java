@@ -1,4 +1,4 @@
-package org.selophane.elements;
+package org.selophane.elements.api;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -10,6 +10,8 @@ import org.junit.runners.JUnit4;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.selophane.elements.api.Element;
+import org.selophane.elements.api.Label;
 import org.selophane.elements.helpers.FormTestObject;
 
 /**
@@ -51,8 +53,8 @@ public class FormTest {
 
     @Test
     public void selectWiredProperly() {
-        testObject.option1.selectByIndex(0);
-        Assert.assertEquals(1, testObject.option1.getAllSelectedOptions().size());
+        testObject.selectFragment.getOption1().selectByIndex(0);
+        Assert.assertEquals(1, testObject.selectFragment.getOption1().getAllSelectedOptions().size());
     }
 
     @Test

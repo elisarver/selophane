@@ -1,7 +1,7 @@
-package org.selophane.elements.impl;
+package org.selophane.elements.api.impl;
 
 import org.openqa.selenium.WebElement;
-import org.selophane.elements.TextInput;
+import org.selophane.elements.api.TextInput;
 
 /**
  * TextInput  wrapper.

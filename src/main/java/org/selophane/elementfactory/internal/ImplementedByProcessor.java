@@ -1,6 +1,7 @@
-package org.selophane.elements.impl.internal;
+package org.selophane.elementfactory.internal;
 
-import org.selophane.elements.Element;
+import org.selophane.elementfactory.api.ImplementedBy;
+import org.selophane.elements.api.Element;
 
 /**
  * Processes the iface type into a useful class reference for wrapping WebElements.
