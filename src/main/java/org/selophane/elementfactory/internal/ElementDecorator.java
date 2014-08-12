@@ -1,4 +1,4 @@
-package org.selophane.elementfactory.api.internal;
+package org.selophane.elementfactory.internal;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;

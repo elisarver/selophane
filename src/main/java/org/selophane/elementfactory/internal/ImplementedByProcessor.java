@@ -1,4 +1,4 @@
-package org.selophane.elementfactory.api.internal;
+package org.selophane.elementfactory.internal;
 
 import org.selophane.elementfactory.api.ImplementedBy;
 import org.selophane.elements.api.Element;

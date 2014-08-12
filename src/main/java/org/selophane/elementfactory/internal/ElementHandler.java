@@ -1,4 +1,4 @@
-package org.selophane.elementfactory.api.internal;
+package org.selophane.elementfactory.internal;
 
 import org.selophane.elements.api.Element;
 import org.openqa.selenium.WebElement;
@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static org.selophane.elementfactory.api.internal.ImplementedByProcessor.getWrapperClass;
+import static org.selophane.elementfactory.internal.ImplementedByProcessor.getWrapperClass;
 
 /**
  * Replaces DefaultLocatingElementHandler. Simply opens it up to descendants of the WebElement interface, and other
