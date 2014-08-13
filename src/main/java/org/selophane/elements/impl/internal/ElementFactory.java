@@ -28,13 +28,12 @@ public class ElementFactory {
      * {@link ElementFactory#initElements(org.openqa.selenium.WebDriver, Class)}
      * but will only replace the fields of an already instantiated Page Object.
      * 
-     * @param driver A search context that will be used to look up the elements
+     * @param searchContext A search context that will be used to look up the elements
      * @param page The object with WebElement and List<WebElement> fields that should be proxied.
      * @return the initialized page-object.
      */
-    public static <T> T initElements(SearchContext driver, T page) {
-        final SearchContext driverRef = driver;
-        initElements(new ElementDecorator(new DefaultElementLocatorFactory(driverRef)), page);
+    public static <T> T initElements(SearchContext searchContext, T page) {
+        initElements(new ElementDecorator(new DefaultElementLocatorFactory(searchContext)), page);
         return page;
     }
 
