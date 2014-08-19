@@ -122,7 +122,7 @@ public class ElementDecorator implements FieldDecorator {
     @SuppressWarnings("unchecked")
     protected <T> List<T> proxyForListLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) {
         InvocationHandler handler;
-        if (interfaceType.getName().startsWith("org.selophane")) {
+        if (interfaceType.getAnnotation(ImplementedBy.class) != null) {
             handler = new ElementListHandler(interfaceType, locator);
         } else {
             handler = new LocatingElementListHandler(locator);
