@@ -15,7 +15,7 @@ import org.selophane.elements.impl.CheckBoxImpl;
  * Part2ExampleTest uses original WebDriver PageFactory.
  * This is to show the awkwardness of manually wrapping WebElements.
  *
- * @see <a href="http://elisarver.com/blog/2012/12/09/wrapping-webelement-1/">Wrapping WebElement Part 1</a>
+ * @see <a href="http://elisarver.com/2012/12/09/wrapping-webelement-1">Wrapping WebElement Part 1</a>
  */
 public class Part1ExampleTest {
     @FindBy(id = "checkbox")
