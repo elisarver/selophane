@@ -1,7 +1,12 @@
 package org.selophane.elements.helpers;
 
 import org.selophane.elements.*;
-import org.selophane.elements.impl.internal.ElementFactory;
+import org.selophane.elements.base.Element;
+import org.selophane.elements.factory.api.ElementFactory;
+import org.selophane.elements.widget.CheckBox;
+import org.selophane.elements.widget.Label;
+import org.selophane.elements.widget.Table;
+import org.selophane.elements.widget.TextInput;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

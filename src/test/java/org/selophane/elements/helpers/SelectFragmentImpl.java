@@ -5,9 +5,9 @@ package org.selophane.elements.helpers;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.selophane.elements.Select;
-import org.selophane.elements.impl.ElementImpl;
-import org.selophane.elements.impl.internal.ElementFactory;
+import org.selophane.elements.base.ElementImpl;
+import org.selophane.elements.factory.api.ElementFactory;
+import org.selophane.elements.widget.Select;
 
 /**
  * Implementation of {@link SelectFragment}.

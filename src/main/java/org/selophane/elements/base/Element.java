@@ -1,7 +1,5 @@
-package org.selophane.elements;
+package org.selophane.elements.base;
 
-import org.selophane.elements.impl.ElementImpl;
-import org.selophane.elements.impl.internal.ImplementedBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
