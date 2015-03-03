@@ -1,6 +1,4 @@
-package org.selophane.elements.impl.internal;
-
-import org.selophane.elements.impl.ElementImpl;
+package org.selophane.elements.base;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

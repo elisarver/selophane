@@ -10,7 +10,9 @@ import org.junit.runners.JUnit4;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.selophane.elements.base.Element;
 import org.selophane.elements.helpers.FormTestObject;
+import org.selophane.elements.widget.Label;
 
 /**
  * Test the form element types.
