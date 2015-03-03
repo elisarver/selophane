@@ -7,7 +7,9 @@ Element is the main concept in Selophane. It's a small core of functionality aro
 
 It's meant to save conceptual time, since a Select has a better semantic  is better than knowing it implements interface WebElement, which tells you nothing.
 
-Also, as a teachable example of how that works, check out how that Select class works. Its extensions and implementations should make the flow clear. In that class we wrap the WebElement again with a built-in helper from the core Selenium library. We add a few methods of our own to the Interface and implementation as well.
+Also, as a teachable example of how that works, check out how that Select class works. Its extensions and implementations should make the flow clear. In that class we wrap the WebElement again with a built-in helper from the core Selenium library. We add a few methods of our own to the Interface and implementation as well. 
+You can find a explanation in detail about 
+[the idea](http://elisarver.com/2012/12/09/wrapping-webelement-1) and [concrete implementation ](http://elisarver.com/2012/12/10/wrapping-webelement-2) in the blog. 
 
 This project does not not rely upon a dependency injection framework like Spring or Guice. We don't do anything to prevent you from using injection, but we'd prefer to work at the same level the core of Selenium and not assume such things.
 
