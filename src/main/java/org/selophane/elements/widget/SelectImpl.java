@@ -1,9 +1,12 @@
 package org.selophane.elements.widget;
 
 import org.selophane.elements.base.ElementImpl;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Wrapper around a WebElement for the Select class in Selenium.
@@ -62,13 +65,62 @@ public class SelectImpl extends ElementImpl implements Select {
     }
 
     /**
-     * Wraps Selenium's method.
-     *
-     * @param text visible text to select
+     * Select all options that display text matching the argument. That is, when
+     * given "Bar" this would select an option like:
+     * 
+     * &lt;option value="foo"&gt;Bar&lt;/option&gt;
+     * 
+     * @param text The visible text to match against
+     * @throws NoSuchElementException If no matching option elements are found
      * @see org.openqa.selenium.support.ui.Select#selectByVisibleText(String)
      */
     public void selectByVisibleText(String text) {
-        innerSelect.selectByVisibleText(text);
+        final WebElement element = getWrappedElement();
+        // try to find the option via XPATH ...
+        List<WebElement> options =
+                element.findElements(By.xpath(".//option[normalize-space(.) = "
+                        + escapeQuotes(text) + "]"));
+
+        boolean matched = false;
+        for (WebElement option : options) {
+            if (option.isDisplayed() && option.isEnabled()) {
+                setSelected(option);
+                if (!isMultiple()) {
+                    return;
+                }
+                matched = true;
+            }
+        }
+
+        if (options.isEmpty() && text.contains(" ")) {
+            String subStringWithoutSpace =
+                    getLongestSubstringWithoutSpace(text);
+            List<WebElement> candidates;
+            if ("".equals(subStringWithoutSpace)) {
+                // hmm, text is either empty or contains only spaces - get all
+                // options ...
+                candidates = element.findElements(By.tagName("option"));
+            } else {
+                // get candidates via XPATH ...
+                candidates =
+                        element.findElements(By.xpath(".//option[contains(., "
+                                + escapeQuotes(subStringWithoutSpace) + ")]"));
+            }
+            for (WebElement option : candidates) {
+                if (option.isEnabled() && text.equals(option.getText())) {
+                    setSelected(option);
+                    if (!isMultiple()) {
+                        return;
+                    }
+                    matched = true;
+                }
+            }
+        }
+
+        if (!matched) {
+            throw new NoSuchElementException(
+                    "Cannot locate element with text: " + text);
+        }
     }
 
     /**
@@ -129,4 +181,52 @@ public class SelectImpl extends ElementImpl implements Select {
     public void selectByIndex(int index) {
         innerSelect.selectByIndex(index);
     }
+
+    private String escapeQuotes(String toEscape) {
+        // Convert strings with both quotes and ticks into: foo'"bar ->
+        // concat("foo'", '"', "bar")
+        if (toEscape.indexOf("\"") > -1 && toEscape.indexOf("'") > -1) {
+            boolean quoteIsLast = false;
+            if (toEscape.lastIndexOf("\"") == toEscape.length() - 1) {
+                quoteIsLast = true;
+            }
+            String[] substrings = toEscape.split("\"");
+
+            StringBuilder quoted = new StringBuilder("concat(");
+            for (int i = 0; i < substrings.length; i++) {
+                quoted.append("\"").append(substrings[i]).append("\"");
+                quoted.append(((i == substrings.length - 1) ? (quoteIsLast ? ", '\"')"
+                        : ")")
+                        : ", '\"', "));
+            }
+            return quoted.toString();
+        }
+
+        // Escape string with just a quote into being single quoted:
+        // f"oo -> 'f"oo'
+        if (toEscape.indexOf("\"") > -1) {
+            return String.format("'%s'", toEscape);
+        }
+
+        // Otherwise return the quoted string
+        return String.format("\"%s\"", toEscape);
+    }
+
+    private void setSelected(WebElement option) {
+        if (!option.isSelected()) {
+            option.click();
+        }
+    }
+    
+    private String getLongestSubstringWithoutSpace(String s) {
+        String result = "";
+        StringTokenizer st = new StringTokenizer(s, " ");
+        while (st.hasMoreTokens()) {
+          String t = st.nextToken();
+          if (t.length() > result.length()) {
+            result = t;
+          }
+        }
+        return result;
+      }
 }

@@ -1,5 +1,7 @@
 package org.selophane.elements;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,12 +10,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.selophane.elements.base.Element;
 import org.selophane.elements.helpers.FormTestObject;
 import org.selophane.elements.widget.Label;
+
+import com.google.gson.annotations.Expose;
 
 /**
  * Test the form element types.
@@ -26,6 +32,9 @@ public class FormTest {
     @BeforeClass
     public static void beforeClass() {
         driver = new HtmlUnitDriver();
+        ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         testObject = FormTestObject.initialize(driver);
     }
     
@@ -138,37 +147,35 @@ public class FormTest {
     	Assert.assertEquals("Sum", testObject.table.getCellAtIndex(3, 0).getText());
     }
     
-    @Test
-    @Ignore("At the momment the implementation is wrong")
+    @Test(expected=NoSuchElementException.class)
     public void selectDisabledElement() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
         final String disabledOptionText = "Disabled option";
         testObject.option1.selectByVisibleText(disabledOptionText);
-        Assert.assertNotEquals(disabledOptionText, testObject.option1.getFirstSelectedOption().getText());
-        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
     }
     
-    @Test
-    @Ignore("At the momment the implementation is wrong")
+    @Test(expected=NoSuchElementException.class)
     public void selectHiddenElement() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
         final String displayNoneText = "Option display none";
         testObject.option1.selectByVisibleText(displayNoneText);
-        Assert.assertNotEquals(displayNoneText, testObject.option1.getFirstSelectedOption().getText());
-        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
     }
     
-    @Test
-    @Ignore("At the momment the implementation is wrong")
+    @Test(expected=NoSuchElementException.class)
     public void selectHiddenElementSelectByValue() {
-        testObject.option1.selectByIndex(0);
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
         final String displayNoneText = "Option display none";
         testObject.option1.selectByValue("option5");
-        Assert.assertNotEquals(displayNoneText, testObject.option1.getFirstSelectedOption().getText());
-        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
     }
 
+    @Test(expected=NoSuchElementException.class)
+    public void selectHiddenElementSelectByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        final String displayNoneText = "Option display none";
+        testObject.option1.selectByIndex(4);
+    }
+
+    
     @AfterClass
     public static void afterClass() {
         driver.close();
