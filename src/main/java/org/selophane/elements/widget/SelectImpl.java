@@ -1,12 +1,12 @@
 package org.selophane.elements.widget;
 
-import org.selophane.elements.base.ElementImpl;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
-import java.util.StringTokenizer;
+import org.selophane.elements.base.ElementImpl;
 
 /**
  * Wrapper around a WebElement for the Select class in Selenium.
@@ -45,13 +45,37 @@ public class SelectImpl extends ElementImpl implements Select {
     }
 
     /**
-     * Wraps Selenium's method.
-     *
-     * @param value the value to select.
-     * @see org.openqa.selenium.support.ui.Select#selectByValue(String)
+     * Select all options that have a value matching the argument. That is, when
+     * given "foo" this would select an option like:
+     * 
+     * &lt;option value="foo"&gt;Bar&lt;/option&gt;
+     * 
+     * @param value The value to match against
+     * @throws NoSuchElementException If no matching option elements are found
+     *             or the elements are not visible or disabled.
      */
     public void selectByValue(String value) {
-        innerSelect.selectByValue(value);
+        StringBuilder builder = new StringBuilder(".//option[@value = ");
+        builder.append(escapeQuotes(value));
+        builder.append("]");
+        List<WebElement> options =
+                getWrappedElement().findElements(By.xpath(builder.toString()));
+
+        boolean matched = false;
+        for (WebElement option : options) {
+            if (option.isEnabled() && option.isDisplayed()) {
+                setSelected(option);
+                if (!isMultiple()) {
+                    return;
+                }
+                matched = true;
+            }
+        }
+
+        if (!matched) {
+            throw new NoSuchElementException(
+                    "Cannot locate option with value: " + value);
+        }
     }
 
     /**
@@ -72,6 +96,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * 
      * @param text The visible text to match against
      * @throws NoSuchElementException If no matching option elements are found
+     *             or the elements are not visible or disabled.
      * @see org.openqa.selenium.support.ui.Select#selectByVisibleText(String)
      */
     public void selectByVisibleText(String text) {
@@ -173,13 +198,32 @@ public class SelectImpl extends ElementImpl implements Select {
     }
 
     /**
-     * Wraps Selenium's method.
-     *
-     * @param index index to select
+     * Select the option at the given index. This is done by examing the "index"
+     * attribute of an element, and not merely by counting.
+     * 
+     * @param index The option at this index will be selected
+     * @throws NoSuchElementException If no matching option elements are found
+     *             or the elements are not visible or disabled.
      * @see org.openqa.selenium.support.ui.Select#selectByIndex(int)
      */
     public void selectByIndex(int index) {
-        innerSelect.selectByIndex(index);
+        String match = String.valueOf(index);
+
+        boolean matched = false;
+        for (WebElement option : getOptions()) {
+            if (match.equals(option.getAttribute("index"))
+                    && option.isEnabled() && option.isDisplayed()) {
+                setSelected(option);
+                if (!isMultiple()) {
+                    return;
+                }
+                matched = true;
+            }
+        }
+        if (!matched) {
+            throw new NoSuchElementException(
+                    "Cannot locate option with index: " + index);
+        }
     }
 
     private String escapeQuotes(String toEscape) {
@@ -217,16 +261,16 @@ public class SelectImpl extends ElementImpl implements Select {
             option.click();
         }
     }
-    
+
     private String getLongestSubstringWithoutSpace(String s) {
         String result = "";
         StringTokenizer st = new StringTokenizer(s, " ");
         while (st.hasMoreTokens()) {
-          String t = st.nextToken();
-          if (t.length() > result.length()) {
-            result = t;
-          }
+            String t = st.nextToken();
+            if (t.length() > result.length()) {
+                result = t;
+            }
         }
         return result;
-      }
+    }
 }
