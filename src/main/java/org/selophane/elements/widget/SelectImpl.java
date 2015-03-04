@@ -1,6 +1,6 @@
-package org.selophane.elements.impl;
+package org.selophane.elements.widget;
 
-import org.selophane.elements.Select;
+import org.selophane.elements.base.ElementImpl;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;

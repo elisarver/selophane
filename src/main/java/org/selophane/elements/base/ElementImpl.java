@@ -1,4 +1,6 @@
-package org.selophane.elements.impl;
+package org.selophane.elements.base;
+
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -6,10 +8,6 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
-import org.selophane.elements.Element;
-import org.selophane.elements.TextInput;
-
-import java.util.List;
 
 /**
  * An implementation of the Element interface. Delegates its work to an underlying WebElement instance for
@@ -100,7 +98,7 @@ public class ElementImpl implements Element {
 
     @Override
     public void clear() {
-        throw new NoSuchMethodError("Method clear is only available in the " + TextInput.class.getName() + "class.");
+        throw new NoSuchMethodError("Method clear is only available in the " + ElementImpl.class.getName() + "class.");
     }
 
     @Override

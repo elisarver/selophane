@@ -1,7 +1,7 @@
-package org.selophane.elements;
+package org.selophane.elements.widget;
 
-import org.selophane.elements.impl.SelectImpl;
-import org.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elements.base.Element;
+import org.selophane.elements.base.ImplementedBy;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
