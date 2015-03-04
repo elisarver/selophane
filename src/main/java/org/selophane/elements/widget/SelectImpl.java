@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.selophane.elements.base.ElementImpl;
@@ -61,21 +63,15 @@ public class SelectImpl extends ElementImpl implements Select {
         List<WebElement> options =
                 getWrappedElement().findElements(By.xpath(builder.toString()));
 
-        boolean matched = false;
+        State state = State.NOT_FOUND;
         for (WebElement option : options) {
-            if (option.isEnabled() && option.isDisplayed()) {
-                setSelected(option);
-                if (!isMultiple()) {
-                    return;
-                }
-                matched = true;
+            state = state.recognizeNewState(setSelected(option));
+            if (!isMultiple() && state == State.SELECTED) {
+                return;
             }
         }
 
-        if (!matched) {
-            throw new NoSuchElementException(
-                    "Cannot locate option with value: " + value);
-        }
+        state.checkState("value: " + value);
     }
 
     /**
@@ -106,14 +102,11 @@ public class SelectImpl extends ElementImpl implements Select {
                 element.findElements(By.xpath(".//option[normalize-space(.) = "
                         + escapeQuotes(text) + "]"));
 
-        boolean matched = false;
+        State state = State.NOT_FOUND;
         for (WebElement option : options) {
-            if (option.isDisplayed() && option.isEnabled()) {
-                setSelected(option);
-                if (!isMultiple()) {
-                    return;
-                }
-                matched = true;
+            state = state.recognizeNewState(setSelected(option));
+            if (!isMultiple() && state == State.SELECTED) {                
+                return;
             }
         }
 
@@ -132,20 +125,17 @@ public class SelectImpl extends ElementImpl implements Select {
                                 + escapeQuotes(subStringWithoutSpace) + ")]"));
             }
             for (WebElement option : candidates) {
-                if (option.isEnabled() && text.equals(option.getText())) {
-                    setSelected(option);
-                    if (!isMultiple()) {
+                if (text.equals(option.getText())) {
+                    state = state.recognizeNewState(setSelected(option));
+                    if (!isMultiple()  && state == State.SELECTED) {
                         return;
                     }
-                    matched = true;
                 }
             }
         }
 
-        if (!matched) {
-            throw new NoSuchElementException(
-                    "Cannot locate element with text: " + text);
-        }
+        state.checkState("text: " + text);
+        
     }
 
     /**
@@ -209,21 +199,16 @@ public class SelectImpl extends ElementImpl implements Select {
     public void selectByIndex(int index) {
         String match = String.valueOf(index);
 
-        boolean matched = false;
+        State state = State.NOT_FOUND;
         for (WebElement option : getOptions()) {
-            if (match.equals(option.getAttribute("index"))
-                    && option.isEnabled() && option.isDisplayed()) {
-                setSelected(option);
-                if (!isMultiple()) {
+            if (match.equals(option.getAttribute("index"))) {
+                state = state.recognizeNewState(setSelected(option));
+                if (!isMultiple()  && state == State.SELECTED) {
                     return;
                 }
-                matched = true;
             }
         }
-        if (!matched) {
-            throw new NoSuchElementException(
-                    "Cannot locate option with index: " + index);
-        }
+        state.checkState("index: " + index);
     }
 
     private String escapeQuotes(String toEscape) {
@@ -256,10 +241,17 @@ public class SelectImpl extends ElementImpl implements Select {
         return String.format("\"%s\"", toEscape);
     }
 
-    private void setSelected(WebElement option) {
+    private State setSelected(WebElement option) {
+        if (!option.isDisplayed()) {
+            return State.NOT_VISIBLE;
+        }
+        if (!option.isEnabled()) {
+            return State.DISABLED;
+        }
         if (!option.isSelected()) {
             option.click();
         }
+        return State.SELECTED;
     }
 
     private String getLongestSubstringWithoutSpace(String s) {
@@ -272,5 +264,36 @@ public class SelectImpl extends ElementImpl implements Select {
             }
         }
         return result;
+    }
+
+    private enum State {
+
+        NOT_FOUND, NOT_VISIBLE, DISABLED, SELECTED;
+
+        private State recognizeNewState(State newState) {
+            if (this.ordinal() < newState.ordinal()) {
+                return newState;
+            } else {
+                return this;
+            }
+
+        }
+
+        private void checkState(String searchCriteria) {
+            switch (this) {
+            case NOT_VISIBLE:
+                throw new ElementNotVisibleException(
+                        "You may only interact with visible elements" + searchCriteria);
+            case DISABLED:
+                throw new InvalidElementStateException(
+                        "You may only interact with enabled elements with " + searchCriteria);
+            case NOT_FOUND:
+                throw new NoSuchElementException(
+                        "Cannot locate option with " + searchCriteria);
+            case SELECTED:
+                //DO_NOTHING;
+            }
+        }
+
     }
 }

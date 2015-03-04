@@ -6,11 +6,11 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,8 +18,6 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.selophane.elements.base.Element;
 import org.selophane.elements.helpers.FormTestObject;
 import org.selophane.elements.widget.Label;
-
-import com.google.gson.annotations.Expose;
 
 /**
  * Test the form element types.
@@ -147,32 +145,48 @@ public class FormTest {
     	Assert.assertEquals("Sum", testObject.table.getCellAtIndex(3, 0).getText());
     }
     
-    @Test(expected=NoSuchElementException.class)
+    @Test(expected=InvalidElementStateException.class)
     public void selectDisabledElement() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
         final String disabledOptionText = "Disabled option";
         testObject.option1.selectByVisibleText(disabledOptionText);
     }
     
-    @Test(expected=NoSuchElementException.class)
+    @Test(expected=ElementNotVisibleException.class)
     public void selectHiddenElement() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
         final String displayNoneText = "Option display none";
         testObject.option1.selectByVisibleText(displayNoneText);
     }
     
-    @Test(expected=NoSuchElementException.class)
+    @Test(expected=ElementNotVisibleException.class)
     public void selectHiddenElementSelectByValue() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
-        final String displayNoneText = "Option display none";
         testObject.option1.selectByValue("option5");
     }
 
-    @Test(expected=NoSuchElementException.class)
+    @Test(expected=ElementNotVisibleException.class)
     public void selectHiddenElementSelectByIndex() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
-        final String displayNoneText = "Option display none";
         testObject.option1.selectByIndex(4);
+    }
+    
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByIndex(10);
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByValue() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByValue("foofoo");
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByVisibleText() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByVisibleText("fooBar");
     }
 
     
