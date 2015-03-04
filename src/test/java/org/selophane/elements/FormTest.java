@@ -4,6 +4,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -133,6 +134,37 @@ public class FormTest {
     @Test
     public void tableGetFooterCell() {
     	Assert.assertEquals("Sum", testObject.table.getCellAtIndex(3, 0).getText());
+    }
+    
+    @Test
+    @Ignore("At the momment the implementation is wrong")
+    public void selectDisabledElement() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        final String disabledOptionText = "Disabled option";
+        testObject.option1.selectByVisibleText(disabledOptionText);
+        Assert.assertNotEquals(disabledOptionText, testObject.option1.getFirstSelectedOption().getText());
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+    }
+    
+    @Test
+    @Ignore("At the momment the implementation is wrong")
+    public void selectHiddenElement() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        final String displayNoneText = "Option display none";
+        testObject.option1.selectByVisibleText(displayNoneText);
+        Assert.assertNotEquals(displayNoneText, testObject.option1.getFirstSelectedOption().getText());
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+    }
+    
+    @Test
+    @Ignore("At the momment the implementation is wrong")
+    public void selectHiddenElementSelectByValue() {
+        testObject.option1.selectByIndex(0);
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        final String displayNoneText = "Option display none";
+        testObject.option1.selectByValue("option5");
+        Assert.assertNotEquals(displayNoneText, testObject.option1.getFirstSelectedOption().getText());
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
     }
 
     @AfterClass
