@@ -1,7 +1,9 @@
 package org.selophane.elements;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.jboss.arquillian.phantom.resolver.ResolvingPhantomJSDriverService;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,6 +17,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.selophane.elements.base.Element;
 import org.selophane.elements.helpers.FormTestObject;
 import org.selophane.elements.widget.Label;
@@ -28,11 +32,14 @@ public class FormTest {
     static FormTestObject testObject;
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void beforeClass() throws IOException {
         driver = new HtmlUnitDriver();
         ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        driver = new PhantomJSDriver(
+                ResolvingPhantomJSDriverService.createDefaultService(), // service resolving phantomjs binary automatically
+                DesiredCapabilities.phantomjs());
         testObject = FormTestObject.initialize(driver);
     }
     
