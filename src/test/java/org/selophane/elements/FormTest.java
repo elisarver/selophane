@@ -30,16 +30,22 @@ import org.selophane.elements.widget.Label;
 public class FormTest {
     static WebDriver driver;
     static FormTestObject testObject;
+    
+    private static final boolean USE_HTML_UNIT = false; 
 
     @BeforeClass
     public static void beforeClass() throws IOException {
-        driver = new HtmlUnitDriver();
-        ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        driver = new PhantomJSDriver(
-                ResolvingPhantomJSDriverService.createDefaultService(), // service resolving phantomjs binary automatically
+        if (USE_HTML_UNIT) {
+            driver = new HtmlUnitDriver();
+            ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        } else {
+            driver = new PhantomJSDriver(
+                // service resolving phantomjs binary automatically
+                ResolvingPhantomJSDriverService.createDefaultService(), 
                 DesiredCapabilities.phantomjs());
+        }
         testObject = FormTestObject.initialize(driver);
     }
     
