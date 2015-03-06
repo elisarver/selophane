@@ -152,6 +152,19 @@ public class FormTest {
         testObject.option1.selectByVisibleText(disabledOptionText);
     }
     
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElementByValue() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByValue("option3");
+    }
+
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElementByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByIndex(2);
+    }
+
     @Test(expected=ElementNotVisibleException.class)
     public void selectHiddenElement() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
