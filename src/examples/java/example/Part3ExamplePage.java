@@ -2,8 +2,8 @@ package example;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.selophane.elements.CheckBox;
-import org.selophane.elements.impl.internal.ElementFactory;
+import org.selophane.elements.factory.api.ElementFactory;
+import org.selophane.elements.widget.CheckBox;
 
 /**
  * A page that can be initialized statically.

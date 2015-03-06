@@ -1,11 +1,11 @@
-package org.selophane.elements.impl;
+package org.selophane.elements.widget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.selophane.elements.Table;
+import org.selophane.elements.base.ElementImpl;
 
 /**
  * Table wrapper.

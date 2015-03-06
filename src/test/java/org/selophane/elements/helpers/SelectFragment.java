@@ -3,9 +3,9 @@
  */
 package org.selophane.elements.helpers;
 
-import org.selophane.elements.Element;
-import org.selophane.elements.Select;
-import org.selophane.elements.impl.internal.ImplementedBy;
+import org.selophane.elements.base.Element;
+import org.selophane.elements.base.ImplementedBy;
+import org.selophane.elements.widget.Select;
 
 /**
  * Fragment of options just for demonstration purpose.

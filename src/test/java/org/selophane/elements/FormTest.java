@@ -1,5 +1,9 @@
 package org.selophane.elements;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.phantom.resolver.ResolvingPhantomJSDriverService;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,10 +11,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.openqa.selenium.InvalidElementStateException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.selophane.elements.base.Element;
 import org.selophane.elements.helpers.FormTestObject;
+import org.selophane.elements.widget.Label;
 
 /**
  * Test the form element types.
@@ -19,13 +29,26 @@ import org.selophane.elements.helpers.FormTestObject;
 public class FormTest {
     static WebDriver driver;
     static FormTestObject testObject;
+    
+    private static final boolean USE_HTML_UNIT = true; 
 
     @BeforeClass
-    public static void beforeClass() {
-        driver = new HtmlUnitDriver();
+    public static void beforeClass() throws IOException {
+        if (USE_HTML_UNIT) {
+            driver = new HtmlUnitDriver();
+            ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        } else {
+            driver = new PhantomJSDriver(
+                // service resolving phantomjs binary automatically
+                ResolvingPhantomJSDriverService.createDefaultService(), 
+                DesiredCapabilities.phantomjs());
+        }
         testObject = FormTestObject.initialize(driver);
     }
     
+   
     @Before
     public void beforeTest() {
     	testObject.get();
@@ -134,7 +157,47 @@ public class FormTest {
     public void tableGetFooterCell() {
     	Assert.assertEquals("Sum", testObject.table.getCellAtIndex(3, 0).getText());
     }
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElement() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        final String disabledOptionText = "Disabled option";
+        testObject.option1.selectByVisibleText(disabledOptionText);
+    }
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElementByValue() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByValue("option3");
+    }
 
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElementByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByIndex(2);
+    }
+
+       
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByIndex(10);
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByValue() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByValue("foofoo");
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByVisibleText() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByVisibleText("fooBar");
+    }
+
+    
     @AfterClass
     public static void afterClass() {
         driver.close();

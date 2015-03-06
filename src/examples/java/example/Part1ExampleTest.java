@@ -1,15 +1,16 @@
 package example;
 
 import junit.framework.Assert;
+
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.selophane.elements.CheckBox;
 import org.selophane.elements.helpers.PageLoader;
-import org.selophane.elements.impl.CheckBoxImpl;
+import org.selophane.elements.widget.CheckBox;
+import org.selophane.elements.widget.CheckBoxImpl;
 
 /**
  * Part2ExampleTest uses original WebDriver PageFactory.

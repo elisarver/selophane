@@ -7,6 +7,11 @@
 			<label for="option1">option 1</label> <select id="option1">
 				<option value="option1">option1</option>
 				<option value="option2">option2</option>
+                <option value="option3" disabled="disabled">Disabled option</option>
+                <!-- An invisible option is handled different by different browser, so no relevant for test -->
+                <option value="option4" style="visibility: hidden;">Option hidden</option>
+                <!-- An none-displayed option is handled different by different browser, so no relevant for test -->
+                <option value="option5" style="display: none;">Option display none</option>
 			</select>
 		</fieldset>
 		<fieldset>
