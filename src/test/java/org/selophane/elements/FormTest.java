@@ -30,7 +30,7 @@ public class FormTest {
     static WebDriver driver;
     static FormTestObject testObject;
     
-    private static final boolean USE_HTML_UNIT = false; 
+    private static final boolean USE_HTML_UNIT = true; 
 
     @BeforeClass
     public static void beforeClass() throws IOException {
@@ -48,6 +48,7 @@ public class FormTest {
         testObject = FormTestObject.initialize(driver);
     }
     
+   
     @Before
     public void beforeTest() {
     	testObject.get();
