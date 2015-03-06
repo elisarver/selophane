@@ -11,7 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -178,25 +177,7 @@ public class FormTest {
         testObject.option1.selectByIndex(2);
     }
 
-    @Test(expected=ElementNotVisibleException.class)
-    public void selectHiddenElement() {
-        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
-        final String displayNoneText = "Option display none";
-        testObject.option1.selectByVisibleText(displayNoneText);
-    }
-    
-    @Test(expected=ElementNotVisibleException.class)
-    public void selectHiddenElementSelectByValue() {
-        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
-        testObject.option1.selectByValue("option5");
-    }
-
-    @Test(expected=ElementNotVisibleException.class)
-    public void selectHiddenElementSelectByIndex() {
-        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
-        testObject.option1.selectByIndex(4);
-    }
-    
+       
     @Test(expected=NoSuchElementException.class)
     public void selectNonExistingElementSelectByIndex() {
         Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
