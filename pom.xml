@@ -38,7 +38,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <selenium.version>2.42.2</selenium.version>
+    <selenium.version>2.45.0</selenium.version>
   </properties>
 
   <dependencies>
