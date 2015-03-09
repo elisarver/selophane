@@ -7,6 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.openqa.selenium.InvalidElementStateException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -136,7 +138,47 @@ public class FormTest {
     public void tableGetFooterCell() {
     	Assert.assertEquals("Sum", testObject.table.getCellAtIndex(3, 0).getText());
     }
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElement() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        final String disabledOptionText = "Disabled option";
+        testObject.option1.selectByVisibleText(disabledOptionText);
+    }
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElementByValue() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByValue("option3");
+    }
 
+    
+    @Test(expected=InvalidElementStateException.class)
+    public void selectDisabledElementByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByIndex(2);
+    }
+
+       
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByIndex() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByIndex(10);
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByValue() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByValue("foofoo");
+    }
+
+    @Test(expected=NoSuchElementException.class)
+    public void selectNonExistingElementSelectByVisibleText() {
+        Assert.assertEquals("option1", testObject.option1.getFirstSelectedOption().getText());
+        testObject.option1.selectByVisibleText("fooBar");
+    }
+
+    
     @AfterClass
     public static void afterClass() {
         driver.close();
