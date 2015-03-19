@@ -1,17 +1,17 @@
 package org.selophane.elements.helpers;
 
-import org.selophane.elements.*;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.selophane.elements.base.Element;
 import org.selophane.elements.factory.api.ElementFactory;
 import org.selophane.elements.widget.CheckBox;
 import org.selophane.elements.widget.Label;
+import org.selophane.elements.widget.Select;
 import org.selophane.elements.widget.Table;
 import org.selophane.elements.widget.TextInput;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
-import java.util.List;
 
 /**
  * declare elements of a form.
@@ -27,6 +27,8 @@ public class FormTestObject {
 
     @FindBy(id = "test1")
     public WebElement webElement;
+    
+    public Select option1;
 
     @FindBy(id = SelectFragment.ID_LOCATOR)
     public SelectFragment selectFragment;
