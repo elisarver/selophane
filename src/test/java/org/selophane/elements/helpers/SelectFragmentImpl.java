@@ -3,6 +3,7 @@
  */
 package org.selophane.elements.helpers;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.selophane.elements.base.ElementImpl;
@@ -22,12 +23,19 @@ public class SelectFragmentImpl extends ElementImpl implements SelectFragment {
     
     public SelectFragmentImpl(WebElement element) {
         super(element);
-        ElementFactory.initElements(element, this);
+        ElementFactory.initElements(element, this);   
     }
 
     @Override
     public Select getOption1() {
         return option1;
     }
+
+    @Override
+    public WebElement getSubElement(By by) {
+        return findElement(by);
+    }
+    
+    
 
 }
