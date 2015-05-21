@@ -10,6 +10,7 @@ import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandler;
 import org.selophane.elements.base.Element;
+import org.selophane.elements.base.ElementImpl;
 import org.selophane.elements.base.ImplementedBy;
 
 import java.lang.reflect.*;
@@ -41,6 +42,10 @@ public class ElementDecorator implements FieldDecorator {
             return null;
         }
 
+        if (field.getDeclaringClass() == ElementImpl.class) {
+            return null;
+        }
+        
         ElementLocator locator = factory.createLocator(field);
         if (locator == null) {
             return null;

@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.openqa.selenium.By;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -57,6 +58,7 @@ public class FormTest {
     public void selectWiredProperly() {
         testObject.selectFragment.getOption1().selectByIndex(0);
         Assert.assertEquals(1, testObject.selectFragment.getOption1().getAllSelectedOptions().size());
+        Assert.assertNotNull(testObject.selectFragment.getSubElement(By.id("option1")));
     }
 
     @Test
