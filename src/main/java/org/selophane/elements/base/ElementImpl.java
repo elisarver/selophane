@@ -98,7 +98,7 @@ public class ElementImpl implements Element {
 
     @Override
     public void clear() {
-        throw new NoSuchMethodError("Method clear is only available in the " + ElementImpl.class.getName() + "class.");
+        element.clear();
     }
 
     @Override
