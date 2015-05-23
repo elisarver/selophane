@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.selophane.elements.base.ElementImpl;
+import org.selophane.elements.base.UniqueElementLocator;
 
 /**
  * Table wrapper.
@@ -14,11 +15,10 @@ public class TableImpl extends ElementImpl implements Table {
 	/**
 	 * Creates a Table for a given WebElement.
 	 * 
-	 * @param element
-	 *            element to wrap up
-	 */
-	public TableImpl(WebElement element) {
-		super(element);
+     * @param elementLocator the locator of the webelement.
+     */
+    public TableImpl(final UniqueElementLocator elementLocator) {
+        super(elementLocator);
 	}
 
 	@Override

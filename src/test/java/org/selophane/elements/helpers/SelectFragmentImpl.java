@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.selophane.elements.base.ElementImpl;
-import org.selophane.elements.factory.api.ElementFactory;
+import org.selophane.elements.base.UniqueElementLocator;
 import org.selophane.elements.widget.Select;
 
 /**
@@ -20,12 +20,13 @@ public class SelectFragmentImpl extends ElementImpl implements SelectFragment {
     
     @FindBy(id = "option1")
     private Select option1;
-    
-    public SelectFragmentImpl(WebElement element) {
-        super(element);
-        ElementFactory.initElements(element, this);   
-    }
-
+    /**
+     * A Select-Fragment
+     * @param elementLocator the locator of the webelement.
+     */
+   public SelectFragmentImpl(final UniqueElementLocator elementLocator) {
+       super(elementLocator);
+   }
     @Override
     public Select getOption1() {
         return option1;
