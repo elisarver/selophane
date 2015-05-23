@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.selophane.elements.base.Element;
 import org.selophane.elements.base.UniqueElementLocator;
@@ -20,6 +21,9 @@ public class ElementListHandler implements InvocationHandler {
 
     private final ElementLocator locator;
     private final Class<?> wrappingType;
+    
+    private List<Object> wrappedList;
+    private List<WebElement> webElementList; 
 
     /**
      * Given an interface and a locator, apply a wrapper over a list of elements.
@@ -48,14 +52,21 @@ public class ElementListHandler implements InvocationHandler {
      */
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
-        List<Object> wrappedList = new ArrayList<Object>();
-        Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
-        final int nrOfElements = locator.findElements().size();        
-        for (int index = 0; index < nrOfElements; index++) {
-            final UniqueElementLocator uniqueElementLocator = new UniqueElementLocatorImpl(locator, index);
-            Object thing = cons.newInstance(uniqueElementLocator);
-            wrappedList.add(wrappingType.cast(thing));
+        final List<WebElement> newWebElemenList = locator.findElements(); 
+        if (wrappedList == null || newWebElemenList != webElementList) {
+            webElementList = newWebElemenList;
+            wrappedList = new ArrayList<Object>();
+            Constructor<?> cons =
+                    wrappingType.getConstructor(UniqueElementLocator.class);
+            final int nrOfElements = newWebElemenList.size();
+            for (int index = 0; index < nrOfElements; index++) {
+                final UniqueElementLocator uniqueElementLocator =
+                        new UniqueElementLocatorImpl(locator, index);
+                Object thing = cons.newInstance(uniqueElementLocator);
+                wrappedList.add(wrappingType.cast(thing));
+            }
         }
+
         try {
             return method.invoke(wrappedList, objects);
         } catch (InvocationTargetException e) {
