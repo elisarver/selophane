@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.selophane.elements.base.ElementImpl;
 import org.selophane.elements.base.UniqueElementLocator;
+import org.selophane.elements.factory.api.ChainedElementLocatorFactory;
+import org.selophane.elements.factory.api.ElementFactory;
 import org.selophane.elements.widget.Select;
 
 /**
@@ -26,6 +28,8 @@ public class SelectFragmentImpl extends ElementImpl implements SelectFragment {
      */
    public SelectFragmentImpl(final UniqueElementLocator elementLocator) {
        super(elementLocator);
+       //TODO in such a case like this it would be performanter to have the parent searchcontext, because id is unique.
+       ElementFactory.initElements(new ChainedElementLocatorFactory(elementLocator), this); 
    }
     @Override
     public Select getOption1() {
