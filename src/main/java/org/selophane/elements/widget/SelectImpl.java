@@ -16,6 +16,9 @@ import org.selophane.elements.base.UniqueElementLocator;
  */
 public class SelectImpl extends ElementImpl implements Select {
 
+    private org.openqa.selenium.support.ui.Select seleniumSelect;
+    private WebElement seleniumSelectWebelement;
+    
     /**
      * Wraps a WebElement with checkbox functionality.
      *
@@ -269,7 +272,13 @@ public class SelectImpl extends ElementImpl implements Select {
      * @return the innerSelect
      */
     private org.openqa.selenium.support.ui.Select getInnerSelect() {
-        return  new org.openqa.selenium.support.ui.Select(getWrappedElement());
+        final WebElement wrappedElement = getWrappedElement();
+        if (seleniumSelect == null || wrappedElement != seleniumSelectWebelement) {
+            seleniumSelectWebelement = wrappedElement;
+            seleniumSelect = new org.openqa.selenium.support.ui.Select(seleniumSelectWebelement);
+            
+        }
+        return seleniumSelect;
     }
 
     private enum State {

@@ -63,7 +63,7 @@ public class ElementDecorator implements FieldDecorator {
         }
 
         if (WebElement.class.isAssignableFrom(fieldType)) {
-            return getInstance(loader, fieldType, locator);
+            return getInstance(fieldType, locator);
         } else if (List.class.isAssignableFrom(fieldType)) {
             Class<?> erasureClass = getErasureClass(field);
             return proxyForListLocator(loader, erasureClass, locator);
@@ -104,24 +104,21 @@ public class ElementDecorator implements FieldDecorator {
     }
 
     /**
-     * Generate a type-parameterized locator proxy for the element in question. We use our customized InvocationHandler
-     * here to wrap classes.
-     *
-     * @param loader        ClassLoader of the wrapping class
+     * Creates an instance of the sublcass of {@link ElementImpl}. 
      * @param interfaceType Interface wrapping the underlying WebElement
      * @param locator       ElementLocator pointing at a proxy of the object on the page
-     * @param <T>           The interface of the proxy.
-     * @return a proxy representing the class we need to wrap.
+     *
+     * @param <T>           The interface of the class.
+     * @return a an instance which wrappes the locator.
      */
     @SuppressWarnings("unchecked")
-    private <T> T getInstance(ClassLoader loader, Class<T> interfaceType, final ElementLocator locator)  {
+    private <T> T getInstance(Class<T> interfaceType, final ElementLocator locator)  {
         try {
             final Class<?> wrappingType = getWrapperClass(interfaceType);
             final Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
-            return (T)cons.newInstance(new UniqueElementLocatorImpl(locator, 0));
+            return (T)cons.newInstance(new UniqueElementLocatorImpl(locator));
         } catch (Exception e) {
-            //TODO Better Exception?
-            throw new RuntimeException("Can't create instance of " + interfaceType.getName(), e);
+            throw new IllegalStateException("Can't create instance of " + interfaceType.getName(), e);
         }
     }
 
