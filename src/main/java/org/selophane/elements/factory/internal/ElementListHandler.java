@@ -52,7 +52,15 @@ public class ElementListHandler implements InvocationHandler {
      */
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
-        final List<WebElement> newWebElemenList = locator.findElements(); 
+        final List<WebElement> newWebElemenList = locator.findElements();
+        
+        final String methodName = method.getName();
+        if ("size".equals(methodName)) {
+            return newWebElemenList.size();
+        } else if ("isEmpty".equals(methodName)) {
+            return newWebElemenList.isEmpty();
+        }
+        
         if (wrappedList == null || newWebElemenList != webElementList) {
             webElementList = newWebElemenList;
             wrappedList = new ArrayList<Object>();
