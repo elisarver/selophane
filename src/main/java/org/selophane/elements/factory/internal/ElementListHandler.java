@@ -1,8 +1,6 @@
 package org.selophane.elements.factory.internal;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.pagefactory.ElementLocator;
-import org.selophane.elements.base.Element;
+import static org.selophane.elements.factory.internal.ImplementedByProcessor.getWrapperClass;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -11,7 +9,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.selophane.elements.factory.internal.ImplementedByProcessor.getWrapperClass;
+import org.openqa.selenium.support.pagefactory.ElementLocator;
+import org.selophane.elements.base.Element;
+import org.selophane.elements.base.UniqueElementLocator;
 
 /**
  * Wraps a list of WebElements in multiple wrapped elements.
@@ -49,9 +49,11 @@ public class ElementListHandler implements InvocationHandler {
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
         List<Object> wrappedList = new ArrayList<Object>();
-        Constructor<?> cons = wrappingType.getConstructor(WebElement.class);
-        for (WebElement element : locator.findElements()) {
-            Object thing = cons.newInstance(element);
+        Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
+        final int nrOfElements = locator.findElements().size();        
+        for (int index = 0; index < nrOfElements; index++) {
+            final UniqueElementLocator uniqueElementLocator = new UniqueElementLocatorImpl(locator, index);
+            Object thing = cons.newInstance(uniqueElementLocator);
             wrappedList.add(wrappingType.cast(thing));
         }
         try {

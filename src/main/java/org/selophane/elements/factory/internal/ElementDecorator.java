@@ -1,8 +1,16 @@
 package org.selophane.elements.factory.internal;
 
+import static org.selophane.elements.factory.internal.ImplementedByProcessor.getWrapperClass;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
+import java.util.List;
+
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -12,9 +20,7 @@ import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandl
 import org.selophane.elements.base.Element;
 import org.selophane.elements.base.ElementImpl;
 import org.selophane.elements.base.ImplementedBy;
-
-import java.lang.reflect.*;
-import java.util.List;
+import org.selophane.elements.base.UniqueElementLocator;
 
 /**
  * WrappedElementDecorator recognizes a few things that DefaultFieldDecorator does not.
@@ -57,7 +63,7 @@ public class ElementDecorator implements FieldDecorator {
         }
 
         if (WebElement.class.isAssignableFrom(fieldType)) {
-            return proxyForLocator(loader, fieldType, locator);
+            return getInstance(loader, fieldType, locator);
         } else if (List.class.isAssignableFrom(fieldType)) {
             Class<?> erasureClass = getErasureClass(field);
             return proxyForListLocator(loader, erasureClass, locator);
@@ -107,13 +113,16 @@ public class ElementDecorator implements FieldDecorator {
      * @param <T>           The interface of the proxy.
      * @return a proxy representing the class we need to wrap.
      */
-    protected <T> T proxyForLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) {
-        InvocationHandler handler = new ElementHandler(interfaceType, locator);
-
-        T proxy;
-        proxy = interfaceType.cast(Proxy.newProxyInstance(
-                loader, new Class[]{interfaceType, WebElement.class, WrapsElement.class, Locatable.class}, handler));
-        return proxy;
+    @SuppressWarnings("unchecked")
+    private <T> T getInstance(ClassLoader loader, Class<T> interfaceType, final ElementLocator locator)  {
+        try {
+            final Class<?> wrappingType = getWrapperClass(interfaceType);
+            final Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
+            return (T)cons.newInstance(new UniqueElementLocatorImpl(locator, 0));
+        } catch (Exception e) {
+            //TODO Better Exception?
+            throw new RuntimeException("Can't create instance of " + interfaceType.getName(), e);
+        }
     }
 
     /**
