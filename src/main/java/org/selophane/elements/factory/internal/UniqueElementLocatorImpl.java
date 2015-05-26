@@ -24,7 +24,8 @@ public class UniqueElementLocatorImpl implements UniqueElementLocator {
      * Creates a new element locator.
      * 
      * @param elementLocator a elementLocator
-     * @param index Index which elements of {@link ElementLocator#findElements()} should be used.
+     * @param index Index which elements of {@link ElementLocator#findElements()} should be used,
+     * if -1 the method {@link ElementLocator#findElement()} is used.
      */
     public UniqueElementLocatorImpl(ElementLocator elementLocator, int index) {
         this.elementLocator = elementLocator;
@@ -32,12 +33,12 @@ public class UniqueElementLocatorImpl implements UniqueElementLocator {
     }
     
     /**
-     * Creates a new element locator.
+     * Creates a new element locator where the method {@link ElementLocator#findElement()} is used.
      * 
      * @param elementLocator a elementLocator
      */
     public UniqueElementLocatorImpl(ElementLocator elementLocator) {
-        this(elementLocator, 0);
+        this(elementLocator, -1);
     }
     
     /**
@@ -45,6 +46,9 @@ public class UniqueElementLocatorImpl implements UniqueElementLocator {
      */
     @Override
     public WebElement findElement() {
+        if (index == -1) {
+            return elementLocator.findElement();
+        }
         return elementLocator.findElements().get(index);
     }
 
