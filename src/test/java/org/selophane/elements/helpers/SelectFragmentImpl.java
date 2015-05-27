@@ -28,8 +28,7 @@ public class SelectFragmentImpl extends ElementImpl implements SelectFragment {
      */
    public SelectFragmentImpl(final UniqueElementLocator elementLocator) {
        super(elementLocator);
-       //TODO in such a case like this it would be performanter to have the parent searchcontext, because id is unique.
-       ElementFactory.initElements(new ChainedElementLocatorFactory(elementLocator), this); 
+       ElementFactory.initElements(elementLocator.getWebDriver(), new ChainedElementLocatorFactory(elementLocator), this); 
    }
     @Override
     public Select getOption1() {

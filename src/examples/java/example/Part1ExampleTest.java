@@ -25,7 +25,7 @@ public class Part1ExampleTest {
 
     @Test
     public void simple() {
-        WebDriver driver = new HtmlUnitDriver();
+        final WebDriver driver = new HtmlUnitDriver();
         PageFactory.initElements(driver, this);
 
         PageLoader.get(driver, "forms.html");
@@ -35,6 +35,11 @@ public class Part1ExampleTest {
             public WebElement findElement() {
                 
                 return checkBox;
+            }
+
+            @Override
+            public WebDriver getWebDriver() {
+                return driver;
             }
         });
 

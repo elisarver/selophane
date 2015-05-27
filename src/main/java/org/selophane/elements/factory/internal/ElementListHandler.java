@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.selophane.elements.base.Element;
@@ -19,6 +20,7 @@ import org.selophane.elements.base.UniqueElementLocator;
  */
 public class ElementListHandler implements InvocationHandler {
 
+    private final WebDriver webDriver;
     private final ElementLocator locator;
     private final Class<?> wrappingType;
     
@@ -29,10 +31,12 @@ public class ElementListHandler implements InvocationHandler {
      * Given an interface and a locator, apply a wrapper over a list of elements.
      *
      * @param interfaceType interface type we're trying to wrap around the element.
+     * @param webDriver     the underlying {@link WebDriver}.
      * @param locator       locator on the page for the elements.
      * @param <T>           type of the interface.
      */
-    public <T> ElementListHandler(Class<T> interfaceType, ElementLocator locator) {
+    public <T> ElementListHandler(Class<T> interfaceType, WebDriver webDriver, ElementLocator locator) {
+        this.webDriver = webDriver;
         this.locator = locator;
         if (!Element.class.isAssignableFrom(interfaceType)) {
             throw new RuntimeException("interface not assignable to Element.");
@@ -69,7 +73,7 @@ public class ElementListHandler implements InvocationHandler {
             final int nrOfElements = newWebElemenList.size();
             for (int index = 0; index < nrOfElements; index++) {
                 final UniqueElementLocator uniqueElementLocator =
-                        new UniqueElementLocatorImpl(locator, index);
+                        new UniqueElementLocatorImpl(webDriver, locator, index);
                 Object thing = cons.newInstance(uniqueElementLocator);
                 wrappedList.add(wrappingType.cast(thing));
             }

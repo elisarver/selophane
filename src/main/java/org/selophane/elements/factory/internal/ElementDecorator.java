@@ -10,6 +10,7 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
@@ -31,14 +32,21 @@ public class ElementDecorator implements FieldDecorator {
     /**
      * factory to use when generating ElementLocator.
      */
-    protected ElementLocatorFactory factory;
+    private ElementLocatorFactory factory;
+    
+    /**
+     * Hold the underlying {@link WebDriver}.
+     */
+    private final WebDriver webDriver;
 
     /**
      * Constructor for an ElementLocatorFactory. This class is designed to replace DefaultFieldDecorator.
      *
+     * @param webDriver the underlying {@link WebDriver}.
      * @param factory for locating elements.
      */
-    public ElementDecorator(ElementLocatorFactory factory) {
+    public ElementDecorator(WebDriver webDriver, ElementLocatorFactory factory) {
+        this.webDriver = webDriver;
         this.factory = factory;
     }
 
@@ -116,7 +124,7 @@ public class ElementDecorator implements FieldDecorator {
         try {
             final Class<?> wrappingType = getWrapperClass(interfaceType);
             final Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
-            return (T)cons.newInstance(new UniqueElementLocatorImpl(locator));
+            return (T)cons.newInstance(new UniqueElementLocatorImpl(webDriver, locator));
         } catch (Exception e) {
             throw new IllegalStateException("Can't create instance of " + interfaceType.getName(), e);
         }
@@ -135,7 +143,7 @@ public class ElementDecorator implements FieldDecorator {
     protected <T> List<T> proxyForListLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) {
         InvocationHandler handler;
         if (interfaceType.getAnnotation(ImplementedBy.class) != null) {
-            handler = new ElementListHandler(interfaceType, locator);
+            handler = new ElementListHandler(interfaceType, webDriver, locator);
         } else {
             handler = new LocatingElementListHandler(locator);
         }
