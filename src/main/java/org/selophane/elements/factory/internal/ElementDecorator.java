@@ -124,7 +124,7 @@ public class ElementDecorator implements FieldDecorator {
         try {
             final Class<?> wrappingType = getWrapperClass(interfaceType);
             final Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
-            return (T)cons.newInstance(new UniqueElementLocatorImpl(webDriver, locator));
+            return (T)cons.newInstance(new LocatorWrappingUniqueElementLocator(webDriver, locator));
         } catch (Exception e) {
             throw new IllegalStateException("Can't create instance of " + interfaceType.getName(), e);
         }

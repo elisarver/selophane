@@ -73,7 +73,7 @@ public class ElementListHandler implements InvocationHandler {
             final int nrOfElements = newWebElemenList.size();
             for (int index = 0; index < nrOfElements; index++) {
                 final UniqueElementLocator uniqueElementLocator =
-                        new UniqueElementLocatorImpl(webDriver, locator, index);
+                        new LocatorWrappingUniqueElementLocator(webDriver, locator, index);
                 Object thing = cons.newInstance(uniqueElementLocator);
                 wrappedList.add(wrappingType.cast(thing));
             }

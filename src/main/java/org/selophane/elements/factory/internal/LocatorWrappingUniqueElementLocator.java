@@ -6,11 +6,12 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.selophane.elements.base.UniqueElementLocator;
 
 /**
- * Implementation of a {@link UniqueElementLocator}.
+ * Implementation of a {@link UniqueElementLocator} which wraps an existing
+ * locator.
  * @author niels
  *
  */
-public class UniqueElementLocatorImpl implements UniqueElementLocator {
+public class LocatorWrappingUniqueElementLocator implements UniqueElementLocator {
     /**
      * Underlying locator.
      */
@@ -34,7 +35,7 @@ public class UniqueElementLocatorImpl implements UniqueElementLocator {
      * @param index Index which elements of {@link ElementLocator#findElements()} should be used,
      * if -1 the method {@link ElementLocator#findElement()} is used.
      */
-    public UniqueElementLocatorImpl(WebDriver webDriver, ElementLocator elementLocator, int index) {
+    public LocatorWrappingUniqueElementLocator(WebDriver webDriver, ElementLocator elementLocator, int index) {
         this.webDriver = webDriver;
         this.elementLocator = elementLocator;
         this.index = index;
@@ -46,7 +47,7 @@ public class UniqueElementLocatorImpl implements UniqueElementLocator {
      * @param webDriver the underlying webdriver
      * @param elementLocator a elementLocator
      */
-    public UniqueElementLocatorImpl(WebDriver webDriver, ElementLocator elementLocator) {
+    public LocatorWrappingUniqueElementLocator(WebDriver webDriver, ElementLocator elementLocator) {
         this(webDriver, elementLocator, -1);
     }
     
