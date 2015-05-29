@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
-import org.selophane.elements.factory.internal.ElementDecorator;
 
 /**
  * Element factory for wrapped elements. Similar to {@link org.openqa.selenium.support.PageFactory}

@@ -1,4 +1,4 @@
-package org.selophane.elements.factory.internal;
+package org.selophane.elements.factory.api;
 
 import static org.selophane.elements.factory.internal.ImplementedByProcessor.getWrapperClass;
 
@@ -22,6 +22,8 @@ import org.selophane.elements.base.Element;
 import org.selophane.elements.base.ElementImpl;
 import org.selophane.elements.base.ImplementedBy;
 import org.selophane.elements.base.UniqueElementLocator;
+import org.selophane.elements.factory.internal.ElementListHandler;
+import org.selophane.elements.factory.internal.LocatorWrappingUniqueElementLocator;
 
 /**
  * WrappedElementDecorator recognizes a few things that DefaultFieldDecorator does not.
