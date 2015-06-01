@@ -15,104 +15,112 @@ import org.openqa.selenium.internal.Locatable;
  */
 public class ElementImpl implements Element {
 
-    private final WebElement element;
+    private final UniqueElementLocator uniqueElementLocator;
 
     /**
-     * Creates a Element for a given WebElement.
+     * Creates a Element for a given {@link UniqueElementLocator}.
      *
-     * @param element element to wrap up
+     * @param elementLocator the locator of the webelement.
      */
-    public ElementImpl(final WebElement element) {
-        this.element = element;
+    public ElementImpl(final UniqueElementLocator elementLocator) {
+        this.uniqueElementLocator = elementLocator;
     }
 
+    /**
+     * @return the element
+     */
+    private WebElement getElement() {
+        return uniqueElementLocator.findElement();
+    }
+    
     @Override
     public void click() {
-        element.click();
+        getElement().click();
     }
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-        element.sendKeys(keysToSend);
+        getElement().sendKeys(keysToSend);
     }
 
     @Override
     public Point getLocation() {
-        return element.getLocation();
+        return getElement().getLocation();
     }
 
     @Override
     public void submit() {
-        element.submit();
+        getElement().submit();
     }
 
     @Override
     public String getAttribute(String name) {
-        return element.getAttribute(name);
+        return getElement().getAttribute(name);
     }
 
     @Override
     public String getCssValue(String propertyName) {
-        return element.getCssValue(propertyName);
+        return getElement().getCssValue(propertyName);
     }
 
     @Override
     public Dimension getSize() {
-        return element.getSize();
+        return getElement().getSize();
     }
 
     @Override
     public List<WebElement> findElements(By by) {
-        return element.findElements(by);
+        return getElement().findElements(by);
     }
 
     @Override
     public String getText() {
-        return element.getText();
+        return getElement().getText();
     }
 
     @Override
     public String getTagName() {
-        return element.getTagName();
+        return getElement().getTagName();
     }
 
     @Override
     public boolean isSelected() {
-        return element.isSelected();
+        return getElement().isSelected();
     }
 
     @Override
     public WebElement findElement(By by) {
-        return element.findElement(by);
+        return getElement().findElement(by);
     }
 
     @Override
     public boolean isEnabled() {
-        return element.isEnabled();
+        return getElement().isEnabled();
     }
 
     @Override
     public boolean isDisplayed() {
-        return element.isDisplayed();
+        return getElement().isDisplayed();
     }
 
     @Override
     public void clear() {
-        throw new NoSuchMethodError("Method clear is only available in the " + ElementImpl.class.getName() + "class.");
+        getElement().clear();
     }
 
     @Override
     public WebElement getWrappedElement() {
-        return element;
+        return getElement();
     }
 
     @Override
     public Coordinates getCoordinates() {
-        return ((Locatable) element).getCoordinates();
+        return ((Locatable) getElement()).getCoordinates();
     }
 
     @Override
     public boolean elementWired() {
-        return (element != null);
+        return (getElement() != null);
     }
+
 }

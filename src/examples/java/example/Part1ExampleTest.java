@@ -1,6 +1,6 @@
 package example;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.selophane.elements.base.UniqueElementLocator;
 import org.selophane.elements.helpers.PageLoader;
 import org.selophane.elements.widget.CheckBox;
 import org.selophane.elements.widget.CheckBoxImpl;
@@ -24,11 +25,23 @@ public class Part1ExampleTest {
 
     @Test
     public void simple() {
-        WebDriver driver = new HtmlUnitDriver();
+        final WebDriver driver = new HtmlUnitDriver();
         PageFactory.initElements(driver, this);
 
         PageLoader.get(driver, "forms.html");
-        CheckBox wrappedCheckBox = new CheckBoxImpl(checkBox);
+        CheckBox wrappedCheckBox = new CheckBoxImpl(new UniqueElementLocator() {
+            
+            @Override
+            public WebElement findElement() {
+                
+                return checkBox;
+            }
+
+            @Override
+            public WebDriver getWebDriver() {
+                return driver;
+            }
+        });
 
         Assert.assertFalse(wrappedCheckBox.isChecked());
         wrappedCheckBox.check();

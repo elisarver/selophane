@@ -9,21 +9,23 @@ import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.selophane.elements.base.ElementImpl;
+import org.selophane.elements.base.UniqueElementLocator;
 
 /**
  * Wrapper around a WebElement for the Select class in Selenium.
  */
 public class SelectImpl extends ElementImpl implements Select {
-    private final org.openqa.selenium.support.ui.Select innerSelect;
 
+    private org.openqa.selenium.support.ui.Select seleniumSelect;
+    private WebElement seleniumSelectWebelement;
+    
     /**
      * Wraps a WebElement with checkbox functionality.
      *
-     * @param element to wrap up
+     * @param elementLocator the locator of the webelement.
      */
-    public SelectImpl(WebElement element) {
-        super(element);
-        this.innerSelect = new org.openqa.selenium.support.ui.Select(element);
+    public SelectImpl(final UniqueElementLocator elementLocator) {
+        super(elementLocator);
     }
 
     /**
@@ -33,7 +35,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#isMultiple()
      */
     public boolean isMultiple() {
-        return innerSelect.isMultiple();
+        return getInnerSelect().isMultiple();
     }
 
     /**
@@ -43,7 +45,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#deselectByIndex(int)
      */
     public void deselectByIndex(int index) {
-        innerSelect.deselectByIndex(index);
+        getInnerSelect().deselectByIndex(index);
     }
 
     /**
@@ -81,7 +83,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#getFirstSelectedOption()
      */
     public WebElement getFirstSelectedOption() {
-        return innerSelect.getFirstSelectedOption();
+        return getInnerSelect().getFirstSelectedOption();
     }
 
     /**
@@ -145,7 +147,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#deselectByValue(String)
      */
     public void deselectByValue(String value) {
-        innerSelect.deselectByValue(value);
+        getInnerSelect().deselectByValue(value);
     }
 
     /**
@@ -154,7 +156,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#deselectAll()
      */
     public void deselectAll() {
-        innerSelect.deselectAll();
+        getInnerSelect().deselectAll();
     }
 
     /**
@@ -164,7 +166,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#getAllSelectedOptions()
      */
     public List<WebElement> getAllSelectedOptions() {
-        return innerSelect.getAllSelectedOptions();
+        return getInnerSelect().getAllSelectedOptions();
     }
 
     /**
@@ -174,7 +176,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#getOptions()
      */
     public List<WebElement> getOptions() {
-        return innerSelect.getOptions();
+        return getInnerSelect().getOptions();
     }
 
     /**
@@ -184,7 +186,7 @@ public class SelectImpl extends ElementImpl implements Select {
      * @see org.openqa.selenium.support.ui.Select#deselectByVisibleText(String)
      */
     public void deselectByVisibleText(String text) {
-        innerSelect.deselectByVisibleText(text);
+        getInnerSelect().deselectByVisibleText(text);
     }
 
     /**
@@ -264,6 +266,19 @@ public class SelectImpl extends ElementImpl implements Select {
             }
         }
         return result;
+    }
+
+    /**
+     * @return the innerSelect
+     */
+    private org.openqa.selenium.support.ui.Select getInnerSelect() {
+        final WebElement wrappedElement = getWrappedElement();
+        if (seleniumSelect == null || wrappedElement != seleniumSelectWebelement) {
+            seleniumSelectWebelement = wrappedElement;
+            seleniumSelect = new org.openqa.selenium.support.ui.Select(seleniumSelectWebelement);
+            
+        }
+        return seleniumSelect;
     }
 
     private enum State {

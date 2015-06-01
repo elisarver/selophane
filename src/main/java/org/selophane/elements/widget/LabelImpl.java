@@ -1,7 +1,7 @@
 package org.selophane.elements.widget;
 
 import org.selophane.elements.base.ElementImpl;
-import org.openqa.selenium.WebElement;
+import org.selophane.elements.base.UniqueElementLocator;
 
 /**
  * Wraps a label on a html form with some behavior.
@@ -11,10 +11,10 @@ public class LabelImpl extends ElementImpl implements Label {
     /**
      * Creates a Element for a given WebElement.
      *
-     * @param element element to wrap up
+     * @param elementLocator the locator of the webelement.
      */
-    public LabelImpl(WebElement element) {
-        super(element);
+    public LabelImpl(final UniqueElementLocator elementLocator) {
+        super(elementLocator);
     }
 
     @Override

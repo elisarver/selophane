@@ -1,8 +1,17 @@
-package org.selophane.elements.factory.internal;
+package org.selophane.elements.factory.api;
 
+import static org.selophane.elements.factory.internal.ImplementedByProcessor.getWrapperClass;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -12,9 +21,9 @@ import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandl
 import org.selophane.elements.base.Element;
 import org.selophane.elements.base.ElementImpl;
 import org.selophane.elements.base.ImplementedBy;
-
-import java.lang.reflect.*;
-import java.util.List;
+import org.selophane.elements.base.UniqueElementLocator;
+import org.selophane.elements.factory.internal.ElementListHandler;
+import org.selophane.elements.factory.internal.LocatorWrappingUniqueElementLocator;
 
 /**
  * WrappedElementDecorator recognizes a few things that DefaultFieldDecorator does not.
@@ -25,14 +34,21 @@ public class ElementDecorator implements FieldDecorator {
     /**
      * factory to use when generating ElementLocator.
      */
-    protected ElementLocatorFactory factory;
+    private ElementLocatorFactory factory;
+    
+    /**
+     * Hold the underlying {@link WebDriver}.
+     */
+    private final WebDriver webDriver;
 
     /**
      * Constructor for an ElementLocatorFactory. This class is designed to replace DefaultFieldDecorator.
      *
+     * @param webDriver the underlying {@link WebDriver}.
      * @param factory for locating elements.
      */
-    public ElementDecorator(ElementLocatorFactory factory) {
+    public ElementDecorator(WebDriver webDriver, ElementLocatorFactory factory) {
+        this.webDriver = webDriver;
         this.factory = factory;
     }
 
@@ -57,7 +73,7 @@ public class ElementDecorator implements FieldDecorator {
         }
 
         if (WebElement.class.isAssignableFrom(fieldType)) {
-            return proxyForLocator(loader, fieldType, locator);
+            return getInstance(fieldType, locator);
         } else if (List.class.isAssignableFrom(fieldType)) {
             Class<?> erasureClass = getErasureClass(field);
             return proxyForListLocator(loader, erasureClass, locator);
@@ -98,22 +114,22 @@ public class ElementDecorator implements FieldDecorator {
     }
 
     /**
-     * Generate a type-parameterized locator proxy for the element in question. We use our customized InvocationHandler
-     * here to wrap classes.
-     *
-     * @param loader        ClassLoader of the wrapping class
+     * Creates an instance of the sublcass of {@link ElementImpl}. 
      * @param interfaceType Interface wrapping the underlying WebElement
      * @param locator       ElementLocator pointing at a proxy of the object on the page
-     * @param <T>           The interface of the proxy.
-     * @return a proxy representing the class we need to wrap.
+     *
+     * @param <T>           The interface of the class.
+     * @return a an instance which wrappes the locator.
      */
-    protected <T> T proxyForLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) {
-        InvocationHandler handler = new ElementHandler(interfaceType, locator);
-
-        T proxy;
-        proxy = interfaceType.cast(Proxy.newProxyInstance(
-                loader, new Class[]{interfaceType, WebElement.class, WrapsElement.class, Locatable.class}, handler));
-        return proxy;
+    @SuppressWarnings("unchecked")
+    private <T> T getInstance(Class<T> interfaceType, final ElementLocator locator)  {
+        try {
+            final Class<?> wrappingType = getWrapperClass(interfaceType);
+            final Constructor<?> cons = wrappingType.getConstructor(UniqueElementLocator.class);
+            return (T)cons.newInstance(new LocatorWrappingUniqueElementLocator(webDriver, locator));
+        } catch (Exception e) {
+            throw new IllegalStateException("Can't create instance of " + interfaceType.getName(), e);
+        }
     }
 
     /**
@@ -129,7 +145,7 @@ public class ElementDecorator implements FieldDecorator {
     protected <T> List<T> proxyForListLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator) {
         InvocationHandler handler;
         if (interfaceType.getAnnotation(ImplementedBy.class) != null) {
-            handler = new ElementListHandler(interfaceType, locator);
+            handler = new ElementListHandler(interfaceType, webDriver, locator);
         } else {
             handler = new LocatingElementListHandler(locator);
         }

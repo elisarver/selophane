@@ -2,6 +2,7 @@ package org.selophane.elements.widget;
 
 import org.openqa.selenium.WebElement;
 import org.selophane.elements.base.ElementImpl;
+import org.selophane.elements.base.UniqueElementLocator;
 
 /**
  * TextInput  wrapper.
@@ -10,10 +11,10 @@ public class TextInputImpl extends ElementImpl implements TextInput {
     /**
      * Creates a Element for a given WebElement.
      *
-     * @param element element to wrap up
+     * @param elementLocator the locator of the webelement.
      */
-    public TextInputImpl(WebElement element) {
-        super(element);
+    public TextInputImpl(final UniqueElementLocator elementLocator) {
+        super(elementLocator);
     }
 
     @Override
