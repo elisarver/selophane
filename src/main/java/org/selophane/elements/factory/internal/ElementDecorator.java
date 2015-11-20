@@ -5,6 +5,7 @@ import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -90,7 +91,8 @@ public class ElementDecorator implements FieldDecorator {
             return false;
         }
 
-        if (field.getAnnotation(FindBy.class) == null && field.getAnnotation(FindBys.class) == null) {
+        if (field.getAnnotation(FindBy.class) == null && field.getAnnotation(FindBys.class) == null &&
+                field.getAnnotation(FindAll.class) == null) {
             return false;
         }
 
