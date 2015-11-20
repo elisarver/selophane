@@ -1,6 +1,7 @@
 package org.selophane.elements.factory.internal;
 
 import org.selophane.elements.base.Element;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 
@@ -37,7 +38,15 @@ public class ElementHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
-        WebElement element = locator.findElement();
+       final WebElement element;
+        try {
+            element = locator.findElement();
+        } catch (NoSuchElementException e) {
+            if ("toString".equals(method.getName())) {
+                return "Proxy element for: " + locator.toString();
+            }
+            throw e;
+        }
 
         if ("getWrappedElement".equals(method.getName())) {
             return element;

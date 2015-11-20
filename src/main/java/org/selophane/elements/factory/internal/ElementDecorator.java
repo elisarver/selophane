@@ -26,7 +26,7 @@ public class ElementDecorator implements FieldDecorator {
     /**
      * factory to use when generating ElementLocator.
      */
-    protected ElementLocatorFactory factory;
+    private ElementLocatorFactory factory;
 
     /**
      * Constructor for an ElementLocatorFactory. This class is designed to replace DefaultFieldDecorator.
