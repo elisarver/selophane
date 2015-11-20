@@ -90,7 +90,8 @@ public class ElementDecorator implements FieldDecorator {
             return false;
         }
 
-        if (field.getAnnotation(FindBy.class) == null && field.getAnnotation(FindBys.class) == null) {
+        if (field.getAnnotation(FindBy.class) == null && field.getAnnotation(FindBys.class) == null &&
+                field.getAnnotation(FindAll.class) == null) {
             return false;
         }
 
