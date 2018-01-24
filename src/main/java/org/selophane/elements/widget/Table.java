@@ -10,7 +10,7 @@ import org.selophane.elements.base.ImplementedBy;
 @ImplementedBy(TableImpl.class)
 public interface Table extends Element {
 
-	/**
+    /**
      * Gets the number of rows in the table
      * @return int equal to the number of rows in the table
      */
@@ -18,7 +18,7 @@ public interface Table extends Element {
 
     /**
      * Gets the number of columns in the table
-     * @return int equal to the number of rows in the table
+     * @return int equal to the number of columns in the table
      */
     int getColumnCount();
 
