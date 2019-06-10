@@ -2,12 +2,9 @@ package org.selophane.elements.base;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
 
 /**
  * An implementation of the Element interface. Delegates its work to an underlying WebElement instance for
@@ -59,6 +56,11 @@ public class ElementImpl implements Element {
     @Override
     public Dimension getSize() {
         return element.getSize();
+    }
+
+    @Override
+    public Rectangle getRect() {
+        throw new UnsupportedOperationException("getRect() not yet implemented");
     }
 
     @Override
@@ -114,5 +116,10 @@ public class ElementImpl implements Element {
     @Override
     public boolean elementWired() {
         return (element != null);
+    }
+
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
+        throw new UnsupportedOperationException("getScreenshotAs() not yet implemented");
     }
 }

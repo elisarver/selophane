@@ -1,7 +1,7 @@
 package org.selophane.elements.base;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
 
 /**
