@@ -57,11 +57,10 @@ public class SelectImpl extends ElementImpl implements Select {
      *             or the elements are not visible or disabled.
      */
     public void selectByValue(String value) {
-        StringBuilder builder = new StringBuilder(".//option[@value = ");
-        builder.append(escapeQuotes(value));
-        builder.append("]");
+        String builder = ".//option[@value = " + escapeQuotes(value) +
+                "]";
         List<WebElement> options =
-                getWrappedElement().findElements(By.xpath(builder.toString()));
+                getWrappedElement().findElements(By.xpath(builder));
 
         State state = State.NOT_FOUND;
         for (WebElement option : options) {

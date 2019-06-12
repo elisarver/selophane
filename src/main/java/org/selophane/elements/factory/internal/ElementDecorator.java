@@ -1,7 +1,7 @@
 package org.selophane.elements.factory.internal;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.Locatable;
+import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;

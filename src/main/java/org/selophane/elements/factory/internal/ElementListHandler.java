@@ -61,6 +61,4 @@ public class ElementListHandler implements InvocationHandler {
             throw e.getCause();
         }
     }
-
-
 }
