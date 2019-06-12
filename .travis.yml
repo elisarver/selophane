@@ -1,7 +1,4 @@
+language: java
 jdk:
-  - openjdk11
-  - openjdk-ea
-
-matrix:
-  allow_failures:
-    - jdk: openjdk-ea
+  - oraclejdk11
+script: mvn clean verify
