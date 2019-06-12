@@ -28,7 +28,7 @@ public class FormTest {
     @BeforeClass
     public static void beforeClass() {
         driver = new HtmlUnitDriver();
-        testObject = FormTestObject.initialize(driver);
+        testObject = new FormTestObject(driver).initialize(driver, FormTestObject.class);
     }
     
     @Before

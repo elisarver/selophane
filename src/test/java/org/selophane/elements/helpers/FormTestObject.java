@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.selophane.elements.base.Element;
+import org.selophane.elements.base.PageObject;
 import org.selophane.elements.factory.api.ElementFactory;
 import org.selophane.elements.widget.CheckBox;
 import org.selophane.elements.widget.Label;
@@ -16,7 +17,7 @@ import org.selophane.elements.widget.TextInput;
 /**
  * declare elements of a form.
  */
-public class FormTestObject {
+public class FormTestObject implements PageObject {
 
     private WebDriver driver;
 
@@ -55,15 +56,15 @@ public class FormTestObject {
         this.driver = driver;
     }
 
-    /**
-     * Static factory for generating the class.
-     *
-     * @param driver The WebDriver for the session.
-     * @return FormTestObject.
-     */
-    public static FormTestObject initialize(WebDriver driver) {
-        return ElementFactory.initElements(driver, FormTestObject.class);
-    }
+//    /**
+//     * Static factory for generating the class.
+//     *
+//     * @param driver The WebDriver for the session.
+//     * @return FormTestObject.
+//     */
+//    public static FormTestObject initialize(WebDriver driver) {
+//        return ElementFactory.initElements(driver, FormTestObject.class);
+//    }
 
     public void get() {
         PageLoader.get(driver, "forms.html");
