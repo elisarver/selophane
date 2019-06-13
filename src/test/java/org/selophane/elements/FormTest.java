@@ -28,7 +28,7 @@ public class FormTest {
     @BeforeClass
     public static void beforeClass() {
         driver = new HtmlUnitDriver();
-        testObject = FormTestObject.initialize(driver);
+        testObject = new FormTestObject(driver).initialize(driver, FormTestObject.class);
     }
     
     @Before
@@ -180,7 +180,6 @@ public class FormTest {
         testObject.option1.selectByVisibleText("fooBar");
     }
 
-    
     @AfterClass
     public static void afterClass() {
         driver.close();
